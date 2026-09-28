@@ -1,0 +1,16 @@
+{
+  "orgName": "ScoreCall Dev",
+  "edition": "Developer",
+  "features": ["Communities", "EnableSetPasswordInApi"],
+  "settings": {
+    "communitiesSettings": {
+      "enableNetworksEnabled": true
+    },
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "mobileSettings": {
+      "enableS1EncryptedStoragePref2": false
+    }
+  }
+}
