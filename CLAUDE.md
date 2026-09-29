@@ -34,8 +34,8 @@ Don't commit directly to `main`. Commit only when asked.
 ## Roles
 
 - The user is the **product owner** and a **co-developer** who is learning LWC and Experience Cloud (experienced in core Salesforce/Apex).
-- **LWC is written by the user.** Claude explains, scaffolds only when asked, and reviews the code. Don't write finished LWC components unless the user explicitly asks.
-- Claude builds Apex, metadata, CI, and tooling by default, and explains the non-obvious parts.
+- Claude builds Apex, LWC, metadata, CI, and tooling, and explains the non-obvious parts. For LWC in particular, explain the key patterns (wire vs. imperative Apex, events, lifecycle hooks, Experience Cloud specifics) so the user learns from the code.
+- The user may take over individual LWC stories to write themselves. When they do, Claude guides and reviews instead of writing the component.
 
 ## Conventions
 
