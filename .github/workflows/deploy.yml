@@ -1,0 +1,60 @@
+# Runs after a merge to main (or manually from the Actions tab).
+# 1. uat        - deploys to scorecall-uat automatically
+# 2. production - deploys to scorecall-prod after a manual approval
+#                 (required reviewer on the "production" environment)
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never run two deployments at the same time; queue them instead.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  uat:
+    name: Deploy to UAT
+    runs-on: ubuntu-latest
+    environment: uat
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-sf
+      - name: Authenticate UAT
+        env:
+          SF_AUTH_URL: ${{ secrets.SF_AUTH_URL_UAT }}
+        run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias uat
+      - name: Deploy
+        run: |
+          if [ -z "$(find force-app -type f)" ]; then
+            echo "No metadata in force-app yet - nothing to deploy."
+            exit 0
+          fi
+          sf project deploy start --source-dir force-app --target-org uat \
+            --test-level RunLocalTests --wait 30 --verbose
+
+  production:
+    name: Deploy to production
+    needs: uat
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-sf
+      - name: Authenticate production
+        env:
+          SF_AUTH_URL: ${{ secrets.SF_AUTH_URL_PROD }}
+        run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias prod
+      - name: Deploy
+        run: |
+          if [ -z "$(find force-app -type f)" ]; then
+            echo "No metadata in force-app yet - nothing to deploy."
+            exit 0
+          fi
+          sf project deploy start --source-dir force-app --target-org prod \
+            --test-level RunLocalTests --wait 30 --verbose
