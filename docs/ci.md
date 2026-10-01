@@ -49,8 +49,8 @@ The orgs are authenticated with **SFDX auth URLs** (`force://...`), which contai
 Run these in PowerShell from the project folder. The auth URL is piped straight into GitHub and never printed.
 
 ```powershell
-(sf org display --target-org scorecall-uat --verbose --json | ConvertFrom-Json).result.sfdxAuthUrl | gh secret set SF_AUTH_URL_UAT
-(sf org display --target-org scorecall-prod --verbose --json | ConvertFrom-Json).result.sfdxAuthUrl | gh secret set SF_AUTH_URL_PROD --env production
+(sf org auth show-sfdx-auth-url --target-org scorecall-uat --json | ConvertFrom-Json).result.sfdxAuthUrl | gh secret set SF_AUTH_URL_UAT
+(sf org auth show-sfdx-auth-url --target-org scorecall-prod --json | ConvertFrom-Json).result.sfdxAuthUrl | gh secret set SF_AUTH_URL_PROD --env production
 ```
 
 **Important:** `sf org logout` revokes the refresh token, and that breaks CI. If you log out of an org or re-authorize it, run the matching command again.
