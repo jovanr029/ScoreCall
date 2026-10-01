@@ -1,0 +1,13 @@
+name: Set up Salesforce CLI
+description: Installs Node and the Salesforce CLI (sf)
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24
+    - name: Install Salesforce CLI
+      shell: bash
+      run: |
+        npm install --global @salesforce/cli@2
+        sf --version

@@ -1,0 +1,53 @@
+# Runs on every pull request to main.
+# 1. quality  - ESLint, Prettier check, LWC Jest (no org needed)
+# 2. validate - check-only deploy + RunLocalTests against UAT (nothing is actually deployed)
+name: PR checks
+
+on:
+  pull_request:
+    branches: [main]
+
+# Only one run per PR at a time; a new push cancels the previous run.
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Lint, format, LWC tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run prettier:verify
+      - run: npm run test:unit
+
+  validate:
+    name: Validate against UAT
+    needs: quality
+    runs-on: ubuntu-latest
+    # Forks don't get secrets, so skip the org validation for PRs from forks.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-sf
+      - name: Authenticate UAT
+        env:
+          SF_AUTH_URL: ${{ secrets.SF_AUTH_URL_UAT }}
+        run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin - --alias uat
+      - name: Check-only deploy with local tests
+        run: |
+          if [ -z "$(find force-app -type f)" ]; then
+            echo "No metadata in force-app yet - nothing to validate."
+            exit 0
+          fi
+          sf project deploy validate --source-dir force-app --target-org uat \
+            --test-level RunLocalTests --wait 30 --verbose
