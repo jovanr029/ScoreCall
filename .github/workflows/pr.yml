@@ -42,7 +42,7 @@ jobs:
       - name: Authenticate UAT
         env:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL_UAT }}
-        run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias uat
+        run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin - --alias uat
       - name: Check-only deploy with local tests
         run: |
           if [ -z "$(find force-app -type f)" ]; then

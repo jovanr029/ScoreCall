@@ -28,7 +28,7 @@ jobs:
       - name: Authenticate UAT
         env:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL_UAT }}
-        run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias uat
+        run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin - --alias uat
       - name: Deploy
         run: |
           if [ -z "$(find force-app -type f)" ]; then
@@ -49,7 +49,7 @@ jobs:
       - name: Authenticate production
         env:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL_PROD }}
-        run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias prod
+        run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin - --alias prod
       - name: Deploy
         run: |
           if [ -z "$(find force-app -type f)" ]; then
