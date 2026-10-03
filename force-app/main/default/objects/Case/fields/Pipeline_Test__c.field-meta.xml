@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Pipeline_Test__c</fullName>
-    <description
-  >Temporary field used to test the CI/CD pipeline (issue #13). Safe to delete.</description>
+    <description>Temporary field used to test the CI/CD pipeline (issue #13). Safe to delete.</description>
     <externalId>false</externalId>
     <label>Pipeline Test</label>
     <length>50</length>
