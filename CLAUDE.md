@@ -26,10 +26,12 @@ Premier League score-prediction game built on Salesforce. Each gameweek, players
 1. Each piece of work starts as a story (GitHub issue).
 2. Branch off `main`: `feature/<issue#>-<short-name>`, `fix/...`, or `chore/...`.
 3. Build and test in a scratch org.
-4. Open a PR to `main`. CI must pass (lint, Prettier check, LWC Jest, Apex tests).
-5. Squash-merge, then CI deploys.
+4. **Review gate:** Claude creates or edits the files, then stops and lists what changed. The user reviews them in VS Code (Source Control diff).
+5. **Commit gate:** commit only after the user says so. Either the user or Claude commits.
+6. **PR gate:** push and open the PR only after a separate go-ahead. CI must pass (lint, Prettier check, LWC Jest, UAT validation with Apex tests).
+7. The user squash-merges, CI deploys to UAT, and the user approves the production deploy.
 
-Don't commit directly to `main`. Commit only when asked.
+Never chain write → commit → push → PR in one go unless the user explicitly asks for it. Don't commit directly to `main` (it's protected anyway).
 
 ## Roles
 
