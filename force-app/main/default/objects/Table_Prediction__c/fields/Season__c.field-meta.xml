@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Season__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>The season being predicted.</description>
+    <label>Season</label>
+    <referenceTo>Season__c</referenceTo>
+    <relationshipLabel>Table Predictions</relationshipLabel>
+    <relationshipName>Table_Predictions</relationshipName>
+    <required>true</required>
+    <type>Lookup</type>
+</CustomField>
