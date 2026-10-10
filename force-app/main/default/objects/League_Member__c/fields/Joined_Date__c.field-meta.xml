@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Joined_Date__c</fullName>
+    <defaultValue>TODAY()</defaultValue>
+    <description>When the player joined. Informational: a late joiner simply has no predictions for earlier gameweeks, so starts at 0.</description>
+    <label>Joined Date</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>

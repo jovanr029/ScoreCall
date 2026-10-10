@@ -127,12 +127,12 @@ Leagues continue across seasons; standings are per season.
 
 ### League_Member\_\_c
 
-| Field            | Type          | Notes             |
-| ---------------- | ------------- | ----------------- |
-| League\_\_c      | Master-Detail |                   |
-| User\_\_c        | Lookup → User |                   |
-| Joined_Date\_\_c | Date          |                   |
-| Unique_Key\_\_c  | Text, unique  | `LeagueId-UserId` |
+| Field            | Type          | Notes                                    |
+| ---------------- | ------------- | ---------------------------------------- |
+| League\_\_c      | Master-Detail |                                          |
+| User\_\_c        | Lookup → User | Required via validation rule (see below) |
+| Joined_Date\_\_c | Date          |                                          |
+| Unique_Key\_\_c  | Text, unique  | `LeagueId-UserId`                        |
 
 ## Leaderboards
 
@@ -145,6 +145,17 @@ Leaderboards aren't stored. They're calculated on demand: the sum of each league
 3. **Gameweek deadline is declarative:** a roll-up (MIN kickoff, excluding postponed) plus a formula, so no code is needed.
 4. **Org-wide defaults:** reference data and leagues are Public Read Only; Prediction and Table Prediction are Private. The same applies to external (site) users.
 5. **Leaderboards are computed, not stored** (see above).
+6. **Lookup to User can't be required in metadata**, so `League_Member__c.User__c` is optional with the `User_Required` validation rule.
+
+## Validation rules
+
+| Object                | Rule                    | Prevents                                  |
+| --------------------- | ----------------------- | ----------------------------------------- |
+| Fixture\_\_c          | Teams_Must_Differ       | A team playing itself                     |
+| Fixture\_\_c          | Finished_Requires_Score | A Finished match without both goal fields |
+| Prediction\_\_c       | Goals_Not_Negative      | Negative predicted goals                  |
+| Table_Prediction\_\_c | Position_In_Range       | A predicted position outside 1–20         |
+| League_Member\_\_c    | User_Required           | A membership without a player             |
 
 ## Access
 
