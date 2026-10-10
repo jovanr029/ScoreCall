@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#37003C</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>ScoreCall: Premier League prediction game. Internal app for the admin and players; friends use the Experience Cloud site.</description>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>ScoreCall</label>
+    <navType>Standard</navType>
+    <tabs>Prediction__c</tabs>
+    <tabs>Table_Prediction__c</tabs>
+    <tabs>League__c</tabs>
+    <tabs>Fixture__c</tabs>
+    <tabs>Gameweek__c</tabs>
+    <tabs>Season__c</tabs>
+    <tabs>Team__c</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

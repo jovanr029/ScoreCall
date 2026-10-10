@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>ScoreCall</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <description>ScoreCall player (every friend, internal or site user): read the game data, create and edit own predictions. Points and keys are read-only; the system sets them.</description>
     <fieldPermissions>
         <editable>false</editable>
@@ -219,4 +223,24 @@
         <object>Team__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>Fixture__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Gameweek__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>League__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Prediction__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Table_Prediction__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

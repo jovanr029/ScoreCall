@@ -52,7 +52,12 @@ Never chain write → commit → push → PR in one go unless the user explicitl
 
 ```bash
 # Create a scratch org for a story and make it the default
-sf org create scratch --definition-file config/project-scratch-def.json --alias scorecall-dev --duration-days 7 --set-default
+sf org create scratch --definition-file config/project-scratch-def.json --alias scorecall-dev --duration-days 30 --set-default
+
+# Set up a fresh scratch org: deploy, give yourself access, load sample data
+sf project deploy start
+sf org assign permset --name ScoreCall_Admin
+sf apex run --file scripts/apex/sample-data.apex
 
 # Deploy source / pull changes made in the org
 sf project deploy start
