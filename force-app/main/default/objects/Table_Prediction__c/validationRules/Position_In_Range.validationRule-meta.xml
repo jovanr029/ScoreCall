@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Position_In_Range</fullName>
+    <active>true</active>
+    <description>A Premier League table has positions 1 to 20.</description>
+    <errorConditionFormula>Predicted_Position__c &lt; 1 || Predicted_Position__c &gt; 20</errorConditionFormula>
+    <errorDisplayField>Predicted_Position__c</errorDisplayField>
+    <errorMessage>Predicted position must be between 1 and 20.</errorMessage>
+</ValidationRule>

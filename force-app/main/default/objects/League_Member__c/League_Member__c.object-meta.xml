@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Membership of a user (player) in a league. A player can be in several leagues; their predictions count in all of them.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <label>League Member</label>
+    <nameField>
+        <displayFormat>LM-{00000}</displayFormat>
+        <label>League Member Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>League Members</pluralLabel>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

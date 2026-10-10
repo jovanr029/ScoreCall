@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>A Premier League match. Belongs to the gameweek in which it is actually played; a postponed match is moved (reparented) to its new gameweek.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <label>Fixture</label>
+    <nameField>
+        <label>Fixture Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Fixtures</pluralLabel>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fixture__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>The match being predicted.</description>
+    <label>Fixture</label>
+    <referenceTo>Fixture__c</referenceTo>
+    <relationshipLabel>Predictions</relationshipLabel>
+    <relationshipName>Predictions</relationshipName>
+    <required>true</required>
+    <type>Lookup</type>
+</CustomField>

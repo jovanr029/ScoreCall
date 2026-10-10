@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>User_Required</fullName>
+    <active>true</active>
+    <description>Makes User__c required. A lookup to User can't be marked required in metadata.</description>
+    <errorConditionFormula>ISBLANK(User__c)</errorConditionFormula>
+    <errorDisplayField>User__c</errorDisplayField>
+    <errorMessage>Select the player.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Points__c</fullName>
+    <description>20 / 15 / 10 / 5 / 0 depending on distance from the actual final position. Set when the season is Finished.</description>
+    <label>Points</label>
+    <precision>2</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exact_Score__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>True when the predicted score matched exactly. Used for the leaderboard tie-breaker.</description>
+    <label>Exact Score</label>
+    <type>Checkbox</type>
+</CustomField>

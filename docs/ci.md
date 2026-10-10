@@ -27,6 +27,15 @@ Merge to main ────────► Deploy
 - Deployments are queued, never run in parallel.
 - Both jobs deploy the whole `force-app` folder and run `RunLocalTests`.
 
+### Manual step after the first ScoreCall deploy to an org
+
+Deploying a permission set doesn't assign it. Give yourself access once per org:
+
+```bash
+sf org assign permset --name ScoreCall_Admin --target-org scorecall-uat
+sf org assign permset --name ScoreCall_Admin --target-org scorecall-prod
+```
+
 ## Branch protection
 
 `main` is protected:
@@ -60,3 +69,4 @@ Run these in PowerShell from the project folder. The auth URL is piped straight 
 - **`validate` fails with an auth error:** the secret is missing or has been revoked. Set it again (see above).
 - **Prettier check fails:** run `npm run prettier` locally and commit the result. The pre-commit hook normally does this for you.
 - **Deploy is stuck at "Waiting":** the production job is waiting for your approval on the run page.
+- **Apex tests pass in the scratch org but fail in UAT with "fields being inaccessible" or "No such column":** Apex respects field-level security for the running user, and the CI user in UAT may not have the ScoreCall permission sets. Tests must create their own user: wrap database work in `System.runAs(TestDataFactory.adminUser())`. To reproduce locally, remove `ScoreCall_Admin` from your scratch user and run the tests.

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Table_Prediction_Deadline__c</fullName>
+    <description>Table predictions can be edited until this moment. Normally 1 hour before the season's first kickoff; for 2026/27 the app launch date.</description>
+    <inlineHelpText>Table predictions lock at this time.</inlineHelpText>
+    <label>Table Prediction Deadline</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

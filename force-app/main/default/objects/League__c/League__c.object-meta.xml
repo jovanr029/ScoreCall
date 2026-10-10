@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>A mini-league: a group of players with its own leaderboard. Continues across seasons; standings are calculated per season. The owner is the league's commissioner.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
+    <label>League</label>
+    <nameField>
+        <label>League Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Leagues</pluralLabel>
+    <sharingModel>Read</sharingModel>
+</CustomObject>

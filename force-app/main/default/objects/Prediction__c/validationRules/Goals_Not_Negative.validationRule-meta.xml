@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Goals_Not_Negative</fullName>
+    <active>true</active>
+    <description>Predicted goals can't be negative.</description>
+    <errorConditionFormula>Home_Goals__c &lt; 0 || Away_Goals__c &lt; 0</errorConditionFormula>
+    <errorMessage>Predicted goals can't be negative.</errorMessage>
+</ValidationRule>
