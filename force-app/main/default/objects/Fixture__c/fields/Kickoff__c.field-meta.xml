@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Kickoff__c</fullName>
+    <description>Kickoff date and time. The earliest kickoff in a gameweek (excluding postponed matches) sets the gameweek deadline.</description>
+    <label>Kickoff</label>
+    <required>true</required>
+    <type>DateTime</type>
+</CustomField>

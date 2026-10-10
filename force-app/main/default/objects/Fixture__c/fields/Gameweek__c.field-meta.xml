@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Gameweek__c</fullName>
+    <description>The gameweek in which the match is actually played. Reparentable: a postponed match moves to the gameweek of its new date.</description>
+    <label>Gameweek</label>
+    <referenceTo>Gameweek__c</referenceTo>
+    <relationshipLabel>Fixtures</relationshipLabel>
+    <relationshipName>Fixtures</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>true</reparentableMasterDetail>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

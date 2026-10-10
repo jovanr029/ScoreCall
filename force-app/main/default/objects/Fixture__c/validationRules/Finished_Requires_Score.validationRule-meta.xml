@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Finished_Requires_Score</fullName>
+    <active>true</active>
+    <description>Scoring needs a final score, so a match can't be Finished without both goal fields.</description>
+    <errorConditionFormula>ISPICKVAL(Status__c, &quot;Finished&quot;) &amp;&amp; (ISBLANK(Home_Goals__c) || ISBLANK(Away_Goals__c))</errorConditionFormula>
+    <errorMessage>A finished match needs both home and away goals.</errorMessage>
+</ValidationRule>

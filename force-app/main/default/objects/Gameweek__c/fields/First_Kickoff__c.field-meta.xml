@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>First_Kickoff__c</fullName>
+    <description>Earliest kickoff of the gameweek's fixtures, ignoring postponed matches. Drives the deadline.</description>
+    <label>First Kickoff</label>
+    <summarizedField>Fixture__c.Kickoff__c</summarizedField>
+    <summaryFilterItems>
+        <field>Fixture__c.Status__c</field>
+        <operation>notEqual</operation>
+        <value>Postponed</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Fixture__c.Gameweek__c</summaryForeignKey>
+    <summaryOperation>min</summaryOperation>
+    <type>Summary</type>
+</CustomField>

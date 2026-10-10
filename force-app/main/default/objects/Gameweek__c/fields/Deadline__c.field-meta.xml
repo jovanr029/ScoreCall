@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deadline__c</fullName>
+    <description>Predictions lock 1 hour before the first kickoff. The Apex prediction service enforces this; the UI only reflects it.</description>
+    <formula>First_Kickoff__c - (1/24)</formula>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+    <inlineHelpText>Predictions for this gameweek lock at this time.</inlineHelpText>
+    <label>Deadline</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>
