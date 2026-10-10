@@ -17,44 +17,30 @@ private class ScoreCallPlayerAccessTest {
 
   @TestSetup
   static void setup() {
-    Season__c season = TestDataFactory.createSeason();
-    List<Team__c> teams = TestDataFactory.createTeams(2);
-    Gameweek__c gameweek = TestDataFactory.createGameweek(season.Id, 8);
-    insert TestDataFactory.buildFixture(
-      gameweek.Id,
-      teams[0],
-      teams[1],
-      KICKOFF
-    );
-
-    // Users and permission set assignments are setup objects: inserting them in
-    // the same transaction as normal records causes MIXED_DML_OPERATION, so run
-    // them in a separate System.runAs context.
-    System.runAs(new User(Id = UserInfo.getUserId())) {
-      createPlayers();
+    // Users and permission set assignments are setup objects. Create them all
+    // first; the game data is inserted inside System.runAs, a separate context,
+    // which avoids MIXED_DML_OPERATION.
+    User admin = TestDataFactory.adminUser();
+    for (String alias : new List<String>{ 'alice', 'bob' }) {
+      User player = TestDataFactory.buildUser(
+        alias,
+        'Minimum Access - Salesforce'
+      );
+      insert player;
+      TestDataFactory.assignPermissionSet(player.Id, 'ScoreCall_Player');
     }
-  }
 
-  private static void createPlayers() {
-    User alice = createPlayer('alice');
-    User bob = createPlayer('bob');
-    insert new List<User>{ alice, bob };
-
-    PermissionSet playerSet = [
-      SELECT Id
-      FROM PermissionSet
-      WHERE Name = 'ScoreCall_Player'
-    ];
-    insert new List<PermissionSetAssignment>{
-      new PermissionSetAssignment(
-        AssigneeId = alice.Id,
-        PermissionSetId = playerSet.Id
-      ),
-      new PermissionSetAssignment(
-        AssigneeId = bob.Id,
-        PermissionSetId = playerSet.Id
-      )
-    };
+    System.runAs(admin) {
+      Season__c season = TestDataFactory.createSeason();
+      List<Team__c> teams = TestDataFactory.createTeams(2);
+      Gameweek__c gameweek = TestDataFactory.createGameweek(season.Id, 8);
+      insert TestDataFactory.buildFixture(
+        gameweek.Id,
+        teams[0],
+        teams[1],
+        KICKOFF
+      );
+    }
   }
 
   @IsTest
@@ -143,25 +129,6 @@ private class ScoreCallPlayerAccessTest {
         );
       }
     }
-  }
-
-  private static User createPlayer(String alias) {
-    Profile minimumAccess = [
-      SELECT Id
-      FROM Profile
-      WHERE Name = 'Minimum Access - Salesforce'
-    ];
-    return new User(
-      Alias = alias,
-      Email = alias + '@scorecall.test',
-      Username = alias + '.' + System.currentTimeMillis() + '@scorecall.test',
-      LastName = alias,
-      ProfileId = minimumAccess.Id,
-      TimeZoneSidKey = 'Europe/London',
-      LocaleSidKey = 'en_GB',
-      LanguageLocaleKey = 'en_US',
-      EmailEncodingKey = 'UTF-8'
-    );
   }
 
   private static User player(String alias) {

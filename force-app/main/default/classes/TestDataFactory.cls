@@ -2,9 +2,56 @@
  * Builds ScoreCall test data. Methods named create* insert the records;
  * methods named build* only instantiate them, so a test can change fields
  * before inserting.
+ *
+ * Apex respects field-level security for the running user, so tests must not
+ * depend on who runs them (an admin in UAT may not have ScoreCall_Admin).
+ * Run database work inside System.runAs(TestDataFactory.adminUser()).
  */
 @IsTest
 public class TestDataFactory {
+  private static User admin;
+
+  /**
+   * A System Administrator with the ScoreCall_Admin permission set, created
+   * once per test. Call it before any other DML in the test: users and
+   * permission set assignments are setup objects (MIXED_DML_OPERATION).
+   */
+  public static User adminUser() {
+    if (admin == null) {
+      admin = buildUser('scadmin', 'System Administrator');
+      insert admin;
+      assignPermissionSet(admin.Id, 'ScoreCall_Admin');
+    }
+    return admin;
+  }
+
+  public static User buildUser(String alias, String profileName) {
+    return new User(
+      Alias = alias,
+      Email = alias + '@scorecall.test',
+      Username = alias + '.' + Crypto.getRandomInteger() + '@scorecall.test',
+      LastName = alias,
+      ProfileId = [SELECT Id FROM Profile WHERE Name = :profileName]
+      .Id,
+      TimeZoneSidKey = 'Europe/London',
+      LocaleSidKey = 'en_GB',
+      LanguageLocaleKey = 'en_US',
+      EmailEncodingKey = 'UTF-8'
+    );
+  }
+
+  public static void assignPermissionSet(Id userId, String permissionSetName) {
+    insert new PermissionSetAssignment(
+      AssigneeId = userId,
+      PermissionSetId = [
+        SELECT Id
+        FROM PermissionSet
+        WHERE Name = :permissionSetName
+      ]
+      .Id
+    );
+  }
+
   public static Season__c createSeason() {
     Season__c season = new Season__c(Name = '2026/27', Status__c = 'Active');
     insert season;
