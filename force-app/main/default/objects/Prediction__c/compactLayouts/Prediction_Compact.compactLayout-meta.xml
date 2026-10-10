@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prediction_Compact</fullName>
+    <fields>Name</fields>
+    <fields>Fixture__c</fields>
+    <fields>Home_Goals__c</fields>
+    <fields>Away_Goals__c</fields>
+    <fields>Points__c</fields>
+    <label>Prediction Compact</label>
+</CompactLayout>

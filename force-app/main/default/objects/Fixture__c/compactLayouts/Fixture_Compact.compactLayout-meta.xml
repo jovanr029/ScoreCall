@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fixture_Compact</fullName>
+    <fields>Name</fields>
+    <fields>Kickoff__c</fields>
+    <fields>Status__c</fields>
+    <fields>Home_Goals__c</fields>
+    <fields>Away_Goals__c</fields>
+    <label>Fixture Compact</label>
+</CompactLayout>
