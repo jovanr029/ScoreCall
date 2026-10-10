@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>A team's participation in a season, holding its place in the league table. Live position during the season; final position once the season is Finished.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <label>Season Team</label>
+    <nameField>
+        <displayFormat>ST-{00000}</displayFormat>
+        <label>Season Team Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Season Teams</pluralLabel>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>
