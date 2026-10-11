@@ -36,6 +36,14 @@ sf org assign permset --name ScoreCall_Admin --target-org scorecall-uat
 sf org assign permset --name ScoreCall_Admin --target-org scorecall-prod
 ```
 
+Secrets are never deployed either. Enter the football-data.org API key once per org (Setup → Named Credentials → External Credentials → Football Data → Principals → FootballDataPrincipal → Authentication Parameters → `ApiKey`), then check it:
+
+```bash
+sf apex run --file scripts/apex/check-football-data.apex --target-org scorecall-uat
+```
+
+See [decisions/002-fixture-source.md](decisions/002-fixture-source.md).
+
 ## Branch protection
 
 `main` is protected:

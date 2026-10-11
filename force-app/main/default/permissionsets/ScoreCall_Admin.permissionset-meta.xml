@@ -5,6 +5,10 @@
         <visible>true</visible>
     </applicationVisibilities>
     <description>ScoreCall administrator (product owner): full access to all ScoreCall objects and fields.</description>
+    <externalCredentialPrincipalAccesses>
+        <enabled>true</enabled>
+        <externalCredentialPrincipal>FootballData-FootballDataPrincipal</externalCredentialPrincipal>
+    </externalCredentialPrincipalAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>Fixture__c.Away_Goals__c</field>
