@@ -1,6 +1,6 @@
 # 002: Fixture and result data source
 
-- **Status:** Proposed (spike #5): API and Salesforce connection proven; waiting for PO approval
+- **Status:** Accepted by the PO on 2026-10-11 (spike #5): API and Salesforce connection proven
 - **Date:** 2026-10-11
 
 ## Decision
