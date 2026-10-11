@@ -1,6 +1,6 @@
 # 002: Fixture and result data source
 
-- **Status:** Proposed (spike #5), waiting for PO approval
+- **Status:** Proposed (spike #5): API and Salesforce connection proven; waiting for PO approval
 - **Date:** 2026-10-11
 
 ## Decision
@@ -109,4 +109,18 @@ Standings row: `{ "position": 1, "team": { "tla": "MCI" }, "playedGames": 6, "po
 ## Open points
 
 - **Terms of use:** the official terms page couldn't be found during the spike. Before go-live, the PO should confirm on football-data.org that a private, non-commercial app for friends is fine, and whether attribution is expected (if so, add "Data: football-data.org" to the site footer).
-- **Named Credential:** to be proven from Salesforce in this spike (next step).
+
+## Salesforce connection (proven)
+
+A callout from the scratch org through the Named Credential returned the live 2026/27 table (`scripts/apex/check-football-data.apex`).
+
+| Metadata                           | Purpose                                                                                                                   |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| External Credential `FootballData` | Custom protocol; sends header `X-Auth-Token: {!$Credential.FootballData.ApiKey}`; named principal `FootballDataPrincipal` |
+| Named Credential `FootballData`    | `https://api.football-data.org`; Apex calls `callout:FootballData/v4/...`                                                 |
+| `ScoreCall_Admin` permission set   | Access to the `FootballDataPrincipal` principal (the sync runs as the admin)                                              |
+
+- **The key is not in source.** Enter it once per org: Setup → Named Credentials → External Credentials → Football Data → Principals → FootballDataPrincipal → Edit → Authentication Parameters → add `ApiKey`.
+- **Gotcha:** a custom header that uses a `{!$Credential...}` formula only works when the Named Credential has **Allow Formulas in HTTP Header** enabled (`allowMergeFieldsInHeader`). Without it, the API answers "Your API token is invalid".
+- **Redeploys keep the key:** redeploying the External and Named Credential metadata (which CI does on every merge) doesn't remove the key entered in Setup. Tested in the scratch org.
+- **Check an org:** `sf apex run --file scripts/apex/check-football-data.apex --target-org <alias>`
