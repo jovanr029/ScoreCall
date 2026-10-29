@@ -28,6 +28,10 @@
                 <behavior>Readonly</behavior>
                 <field>Deadline__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Locked__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

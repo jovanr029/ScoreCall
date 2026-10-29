@@ -58,13 +58,14 @@ Which 20 teams play in a season, and the league table.
 
 ### Gameweek\_\_c
 
-| Field              | Type                                | Notes                                       |
-| ------------------ | ----------------------------------- | ------------------------------------------- |
-| Season\_\_c        | Master-Detail                       |                                             |
-| Number\_\_c        | Number                              | 1–38                                        |
-| First_Kickoff\_\_c | Roll-up MIN of Fixture `Kickoff__c` | Filter: Status ≠ Postponed                  |
-| Deadline\_\_c      | Formula (DateTime)                  | `First_Kickoff__c - 1/24` (one hour before) |
-| Unique_Key\_\_c    | Text, unique                        | `SeasonId-Number`                           |
+| Field              | Type                                | Notes                                                                                                                                                            |
+| ------------------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Season\_\_c        | Master-Detail                       |                                                                                                                                                                  |
+| Number\_\_c        | Number                              | 1–38                                                                                                                                                             |
+| First_Kickoff\_\_c | Roll-up MIN of Fixture `Kickoff__c` | Filter: Status ≠ Postponed                                                                                                                                       |
+| Deadline\_\_c      | Formula (DateTime)                  | `First_Kickoff__c - 1/24` (one hour before)                                                                                                                      |
+| Locked\_\_c        | Checkbox                            | Sticky lock set by the sync once the deadline has passed; can't be cleared (validation rule). Predictions are locked when `Locked__c` OR the deadline has passed |
+| Unique_Key\_\_c    | Text, unique                        | `SeasonId-Number`                                                                                                                                                |
 
 ### Fixture\_\_c
 
@@ -156,6 +157,7 @@ Leaderboards aren't stored. They're calculated on demand: the sum of each league
 | Prediction\_\_c       | Goals_Not_Negative      | Negative predicted goals                  |
 | Table_Prediction\_\_c | Position_In_Range       | A predicted position outside 1–20         |
 | League_Member\_\_c    | User_Required           | A membership without a player             |
+| Gameweek\_\_c         | Locked_Stays_Locked     | Unlocking a locked gameweek               |
 
 ## Access
 

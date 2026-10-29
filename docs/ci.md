@@ -44,6 +44,8 @@ sf apex run --file scripts/apex/check-football-data.apex --target-org scorecall-
 
 See [decisions/002-fixture-source.md](decisions/002-fixture-source.md).
 
+Then load the season and schedule the sync every 30 minutes: see [fixture-sync.md](fixture-sync.md#setting-it-up-in-an-org). Scheduling is never deployed either; it's done once per org.
+
 ## Branch protection
 
 `main` is protected:

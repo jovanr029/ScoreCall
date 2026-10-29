@@ -29,7 +29,9 @@ A correctly predicted draw counts as a correct outcome, e.g. predicting 1–1 wh
 
 - If a match is postponed, all predictions made for it in its original gameweek are **voided**: 0 points for everyone.
 - When the match is rescheduled, it becomes part of the gameweek in which it is **actually played**. Everyone predicts it again there, and those predictions score normally.
-- A postponed match doesn't count towards its original gameweek's deadline.
+- A postponed match doesn't count towards its original gameweek's deadline, as long as the deadline hasn't passed yet.
+- **Once locked, always locked.** When a gameweek's deadline has passed, it stays locked, even if a match is postponed afterwards (e.g. 10 minutes before kickoff because of the weather) and the "first kickoff" moves later. Predictions are never re-opened after the deadline.
+- A match abandoned during play counts as postponed: its predictions are voided.
 
 ## Season table prediction
 
