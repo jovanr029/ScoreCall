@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Locked_Stays_Locked</fullName>
+    <active>true</active>
+    <description>A gameweek that has been locked can't be unlocked, so a deadline that moves later (e.g. after a last-minute postponement) never re-opens predictions. Deactivate this rule only for a deliberate admin correction.</description>
+    <errorConditionFormula>PRIORVALUE(Locked__c) &amp;&amp; NOT(Locked__c)</errorConditionFormula>
+    <errorDisplayField>Locked__c</errorDisplayField>
+    <errorMessage>A locked gameweek can't be unlocked.</errorMessage>
+</ValidationRule>
