@@ -19,5 +19,6 @@
     <tabs>Gameweek__c</tabs>
     <tabs>Season__c</tabs>
     <tabs>Team__c</tabs>
+    <tabs>Sync_Log__c</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>
