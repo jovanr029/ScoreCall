@@ -135,6 +135,19 @@ Leagues continue across seasons; standings are per season.
 | Joined_Date\_\_c | Date          |                                          |
 | Unique_Key\_\_c  | Text, unique  | `LeagueId-UserId`                        |
 
+## Configuration
+
+### Scoring_Rule\_\_mdt (custom metadata type)
+
+Lives in source and is deployed like code; it doesn't use data storage. One record, `Default`.
+
+| Field                  | Value | Notes                                          |
+| ---------------------- | ----- | ---------------------------------------------- |
+| Outcome_Points\_\_c    | 3     | Correct outcome                                |
+| Exact_Score_Bonus\_\_c | 5     | Added to the outcome points for an exact score |
+
+See [game-rules.md → Changing the points](game-rules.md#changing-the-points).
+
 ## Leaderboards
 
 Leaderboards aren't stored. They're calculated on demand: the sum of each league member's `Prediction__c.Points__c` and `Table_Prediction__c.Points__c` for the season (aggregate SOQL). The data volume is tiny (about 4 players × 380 matches), and there are no stored totals to keep in sync.
