@@ -13,7 +13,8 @@ FixtureSyncJob          Schedulable, every 30 minutes (two cron jobs: :00 and :3
             └─ writes, all or nothing:
                  lock passed gameweeks → season → teams → gameweeks → fixtures → table → lock again
 FixtureTrigger (after update)
-  └─ PredictionStatusService   void / re-open predictions when a fixture is postponed or changes gameweek
+  ├─ PredictionStatusService   void / re-open predictions when a fixture is postponed or changes gameweek
+  └─ ScoringService            score predictions when a fixture finishes; re-score a corrected result
 ```
 
 - **Callouts before DML:** Salesforce doesn't allow a callout after DML in one transaction. A Schedulable can't call out at all, and a class can't be both Schedulable and Queueable, hence the three classes.

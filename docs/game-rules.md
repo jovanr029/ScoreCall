@@ -25,6 +25,18 @@ ScoreCall is a Premier League prediction game for a group of friends. These rule
 
 A correctly predicted draw counts as a correct outcome, e.g. predicting 1–1 when the match ends 2–2 gives 3 points.
 
+Points are given automatically as soon as the sync sees the match as finished (within 30 minutes of full time). If a result is later corrected, points are recalculated. In the rare case a result is annulled, the prediction goes back to open until the match is finished again.
+
+### Changing the points
+
+The 3 and 5 are configuration, not code: the custom metadata record **Scoring Rule → Default** (`force-app/main/default/customMetadata/Scoring_Rule.Default.md-meta.xml`).
+
+1. Change the values in that file on a branch and open a PR. **Never edit them directly in Setup**: the next deploy would overwrite the change, and git would no longer show the real rules.
+2. After the PR is merged and deployed, recalculate the season in each org, so the whole season uses one set of rules (PO decision):
+   ```bash
+   sf apex run --file scripts/apex/rescore-season.apex --target-org scorecall-prod
+   ```
+
 ### Postponed matches
 
 - If a match is postponed, all predictions made for it in its original gameweek are **voided**: 0 points for everyone.
