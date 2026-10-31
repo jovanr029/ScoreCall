@@ -122,11 +122,6 @@ for (Gameweek__c gameweek : gameweeks) {
       Kickoff__c = firstKickoff.get(gw).addHours(i * 4),
       External_Id__c = 'SAMPLE-' + gw + '-' + i
     );
-    if (gw == 7) {
-      fixture.Status__c = 'Finished';
-      fixture.Home_Goals__c = Math.mod(i * 7 + 3, 4);
-      fixture.Away_Goals__c = Math.mod(i * 5 + 1, 3);
-    }
     fixtures.add(fixture);
   }
 }
@@ -143,8 +138,9 @@ insert new League_Member__c(
   User__c = UserInfo.getUserId()
 );
 
-// ---- A few predictions for the current user ----
+// ---- Predictions for the current user (GW7 and GW8), varied scores ----
 List<Prediction__c> predictions = new List<Prediction__c>();
+Integer n = 0;
 for (Fixture__c fixture : fixtures) {
   if (
     fixture.Gameweek__c == gameweeks[0].Id ||
@@ -154,13 +150,33 @@ for (Fixture__c fixture : fixtures) {
       new Prediction__c(
         Fixture__c = fixture.Id,
         Gameweek__c = fixture.Gameweek__c,
-        Home_Goals__c = 1,
-        Away_Goals__c = 1
+        Home_Goals__c = Math.mod(n, 3),
+        Away_Goals__c = Math.mod(n + 1, 2)
       )
     );
+    n++;
   }
 }
 insert predictions;
+
+// ---- GW7 results come in after the predictions, like in real life ----
+// Setting Finished fires FixtureTrigger, which scores the predictions.
+List<Fixture__c> results = new List<Fixture__c>();
+Integer i = 0;
+for (Fixture__c fixture : fixtures) {
+  if (fixture.Gameweek__c == gameweeks[0].Id) {
+    results.add(
+      new Fixture__c(
+        Id = fixture.Id,
+        Status__c = 'Finished',
+        Home_Goals__c = Math.mod(i * 7 + 3, 4),
+        Away_Goals__c = Math.mod(i * 5 + 1, 3)
+      )
+    );
+    i++;
+  }
+}
+update results;
 
 System.debug(
   'ScoreCall sample data: 1 season, ' +

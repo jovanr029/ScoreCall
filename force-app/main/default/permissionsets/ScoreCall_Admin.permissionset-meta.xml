@@ -4,6 +4,10 @@
         <application>ScoreCall</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>Scoring_Rule__mdt</name>
+    </customMetadataTypeAccesses>
     <description>ScoreCall administrator (product owner): full access to all ScoreCall objects and fields.</description>
     <externalCredentialPrincipalAccesses>
         <enabled>true</enabled>
