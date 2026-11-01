@@ -30,6 +30,10 @@ jobs:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL_UAT }}
         run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin - --alias uat
       - name: Deploy
+        env:
+          # Replaces the placeholder sender address in the site (Network)
+          # metadata; see "replacements" in sfdx-project.json.
+          SITE_SENDER_EMAIL: ${{ secrets.SITE_SENDER_EMAIL }}
         run: |
           if [ -z "$(find force-app -type f)" ]; then
             echo "No metadata in force-app yet - nothing to deploy."
@@ -37,6 +41,10 @@ jobs:
           fi
           sf project deploy start --source-dir force-app --target-org uat \
             --test-level RunLocalTests --wait 30 --verbose
+      # A deploy updates the site's metadata, but friends only see the
+      # changes after the site is published.
+      - name: Publish the site
+        run: sf community publish --name ScoreCall --target-org uat
 
   production:
     name: Deploy to production
@@ -51,6 +59,8 @@ jobs:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL_PROD }}
         run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin - --alias prod
       - name: Deploy
+        env:
+          SITE_SENDER_EMAIL: ${{ secrets.SITE_SENDER_EMAIL }}
         run: |
           if [ -z "$(find force-app -type f)" ]; then
             echo "No metadata in force-app yet - nothing to deploy."
@@ -58,3 +68,5 @@ jobs:
           fi
           sf project deploy start --source-dir force-app --target-org prod \
             --test-level RunLocalTests --wait 30 --verbose
+      - name: Publish the site
+        run: sf community publish --name ScoreCall --target-org prod

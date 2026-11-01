@@ -174,7 +174,10 @@ Leaderboards aren't stored. They're calculated on demand: the sum of each league
 
 ## Access
 
-| Permission set   | Who           | Access                                                                           |
-| ---------------- | ------------- | -------------------------------------------------------------------------------- |
-| ScoreCall_Admin  | Product owner | Full access to all objects                                                       |
-| ScoreCall_Player | Every player  | Read reference data and leagues; create/edit own Prediction and Table Prediction |
+| Permission set       | Who              | Access                                                                           |
+| -------------------- | ---------------- | -------------------------------------------------------------------------------- |
+| ScoreCall_Admin      | Product owner    | Full access to all objects                                                       |
+| ScoreCall_Player     | Every player     | Read reference data and leagues; create/edit own Prediction and Table Prediction |
+| ScoreCall_Player_App | Internal players | The ScoreCall app and its tabs (no data access; combine with ScoreCall_Player)   |
+
+ScoreCall_Player has no app or tab settings, because the Customer Community licence of site users doesn't allow assigned apps. Friends on the site get the **ScoreCall Friend** profile, which only carries that licence; all their access comes from ScoreCall_Player. See [onboarding.md](onboarding.md).

@@ -1,0 +1,78 @@
+{
+  "type": "sfdc_cms__view",
+  "title": "Home",
+  "contentBody": {
+    "component": {
+      "children": [
+        {
+          "children": [
+            {
+              "attributes": {
+                "backgroundImageConfig": "",
+                "backgroundImageOverlay": "rgba(0,0,0,0)",
+                "componentSpacerSize": "",
+                "layoutDirectionDesktop": "row",
+                "layoutDirectionMobile": "column",
+                "layoutDirectionTablet": "column",
+                "maxContentWidth": "720",
+                "sectionColumnGutterWidth": "",
+                "sectionConfig": "{\"UUID\":\"96f0bba9-97d0-4dbc-9529-72afcc1a113a\",\"columns\":[{\"UUID\":\"8d476c33-0f0f-4c4a-bea7-a6794f6e6201\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
+                "sectionMinHeight": "",
+                "sectionVerticalAlign": "flex-start"
+              },
+              "children": [
+                {
+                  "children": [
+                    {
+                      "attributes": {},
+                      "definition": "c:predictionEntry",
+                      "id": "5c0a8f3e-2b7d-4e61-9a4c-1f6d8e2b7a90",
+                      "type": "component"
+                    }
+                  ],
+                  "id": "8d476c33-0f0f-4c4a-bea7-a6794f6e6201",
+                  "name": "col1",
+                  "title": "Column 1",
+                  "type": "region"
+                }
+              ],
+              "definition": "community_layout:section",
+              "id": "96f0bba9-97d0-4dbc-9529-72afcc1a113a",
+              "type": "component"
+            }
+          ],
+          "id": "c7961b3f-e7b4-48f1-9b99-b50eec9eceb5",
+          "name": "content",
+          "title": "Content",
+          "type": "region"
+        },
+        {
+          "children": [
+            {
+              "attributes": {
+                "customHeadTags": "",
+                "description": "",
+                "pageTitle": "Predict",
+                "recordId": "{!recordId}"
+              },
+              "definition": "community_builder:seoAssistant",
+              "id": "94601925-d00f-4b4e-b0dc-da6b7fe3bf7b",
+              "type": "component"
+            }
+          ],
+          "id": "dd08ee17-3603-42d2-b4ac-8a38e597545a",
+          "name": "sfdcHiddenRegion",
+          "title": "sfdcHiddenRegion",
+          "type": "region"
+        }
+      ],
+      "definition": "community_layout:sldsFlexibleLayout",
+      "id": "819ce2d9-a8ff-4e13-be42-2d6a98b3b9fe",
+      "type": "component"
+    },
+    "dataProviders": [],
+    "themeLayoutType": "Inner",
+    "viewType": "home"
+  },
+  "urlName": "home"
+}

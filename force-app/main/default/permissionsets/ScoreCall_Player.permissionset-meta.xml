@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <applicationVisibilities>
-        <application>ScoreCall</application>
-        <visible>true</visible>
-    </applicationVisibilities>
     <classAccesses>
         <apexClass>PredictionController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <description>ScoreCall player (every friend, internal or site user): read the game data, create and edit own predictions. Points and keys are read-only; the system sets them.</description>
+    <description>Every player, internal or site user: read game data, create/edit own predictions. Any licence incl. Customer Community. Internal players also need ScoreCall_Player_App.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Fixture__c.Away_Goals__c</field>
@@ -232,28 +228,4 @@
         <object>Team__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <tabSettings>
-        <tab>Fixture__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Gameweek__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>League__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Prediction__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>ScoreCall_Predict</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Table_Prediction__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
