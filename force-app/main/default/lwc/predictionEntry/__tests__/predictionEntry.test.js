@@ -6,6 +6,7 @@ import PredictionEntry, {
 import getGameweek from "@salesforce/apex/PredictionController.getGameweek";
 import saveGameweekPredictions from "@salesforce/apex/PredictionController.saveGameweekPredictions";
 import { refreshApex } from "@salesforce/apex";
+import Toast from "lightning/toast";
 
 // The wired Apex method becomes a test wire adapter: the test decides what it
 // "returns" with emit() / error().
@@ -22,6 +23,14 @@ jest.mock(
 jest.mock(
   "@salesforce/apex/PredictionController.saveGameweekPredictions",
   () => ({ default: jest.fn() }),
+  { virtual: true }
+);
+
+// lightning/toast: a default export with a static show(); __esModule makes
+// the default import resolve to this object.
+jest.mock(
+  "lightning/toast",
+  () => ({ __esModule: true, default: { show: jest.fn() } }),
   { virtual: true }
 );
 
@@ -142,9 +151,7 @@ describe("c-prediction-entry", () => {
 
   it("enables Save only after a change, then saves the edited predictions", async () => {
     saveGameweekPredictions.mockResolvedValue(gameweek());
-    const toastHandler = jest.fn();
     const element = mount();
-    element.addEventListener("lightning__showtoast", toastHandler);
     getGameweek.emit(gameweek());
     await flush();
 
@@ -166,17 +173,17 @@ describe("c-prediction-entry", () => {
       predictions: [{ fixtureId: "a02F2", homeGoals: 0, awayGoals: 3 }]
     });
     expect(refreshApex).toHaveBeenCalled();
-    expect(toastHandler).toHaveBeenCalled();
-    expect(toastHandler.mock.calls[0][0].detail.variant).toBe("success");
+    expect(Toast.show).toHaveBeenCalledWith(
+      expect.objectContaining({ variant: "success" }),
+      expect.anything() // the component instance, so the toast knows where it came from
+    );
   });
 
   it("shows the Apex error message when saving fails", async () => {
     saveGameweekPredictions.mockRejectedValue({
       body: { message: "The deadline for 2026/27 GW 9 has passed." }
     });
-    const toastHandler = jest.fn();
     const element = mount();
-    element.addEventListener("lightning__showtoast", toastHandler);
     getGameweek.emit(gameweek());
     await flush();
 
@@ -186,7 +193,7 @@ describe("c-prediction-entry", () => {
     element.shadowRoot.querySelector("lightning-button.save").click();
     await flush();
 
-    const toast = toastHandler.mock.calls[0][0].detail;
+    const toast = Toast.show.mock.calls[0][0];
     expect(toast.variant).toBe("error");
     expect(toast.message).toBe("The deadline for 2026/27 GW 9 has passed.");
     expect(refreshApex).not.toHaveBeenCalled();

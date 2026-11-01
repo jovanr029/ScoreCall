@@ -1,6 +1,7 @@
 import { LightningElement, wire } from "lwc";
 import { refreshApex } from "@salesforce/apex";
-import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import Toast from "lightning/toast";
+import ToastContainer from "lightning/toastContainer";
 import getGameweek from "@salesforce/apex/PredictionController.getGameweek";
 import saveGameweekPredictions from "@salesforce/apex/PredictionController.saveGameweekPredictions";
 
@@ -54,6 +55,13 @@ export default class PredictionEntry extends LightningElement {
   // Lifecycle hooks: start the countdown when the component is inserted in
   // the page, and always stop it when it's removed (or it keeps running).
   connectedCallback() {
+    // LWR sites have no toast container until one is created; Lightning
+    // Experience already has one. instance() returns the same container
+    // every time, so calling it from every component is safe.
+    const toastContainer = ToastContainer.instance();
+    if (toastContainer) {
+      toastContainer.toastPosition = "top-center";
+    }
     // eslint-disable-next-line @lwc/lwc/no-async-operation -- the countdown needs a timer
     this.timer = setInterval(() => {
       this.now = Date.now();
@@ -201,8 +209,11 @@ export default class PredictionEntry extends LightningElement {
     );
   }
 
-  toast(title, message, variant) {
-    this.dispatchEvent(new ShowToastEvent({ title, message, variant }));
+  // lightning/toast works in Lightning Experience and on LWR sites.
+  // (ShowToastEvent needs the Lightning Experience container: on an LWR site
+  // nothing listens for it, so the toast would silently not appear.)
+  toast(label, message, variant) {
+    Toast.show({ label, message, variant }, this);
   }
 
   get maxGoals() {

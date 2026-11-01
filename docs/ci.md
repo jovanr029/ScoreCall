@@ -26,6 +26,11 @@ Merge to main ────────► Deploy
 - **production** uses the `production` GitHub Environment, which has a required reviewer. The run pauses until you click **Review deployments → Approve** on the run page.
 - Deployments are queued, never run in parallel.
 - Both jobs deploy the whole `force-app` folder and run `RunLocalTests`.
+- After deploying, both jobs **publish the friends' site** (`sf community publish --name ScoreCall`). A deploy updates the site's metadata, but site users only see changes once it's published.
+
+### Org-specific values in the site metadata
+
+The site's `Network` metadata needs a sender address for its emails (welcome, password reset). The file in git contains a placeholder, `noreply@example.com`, so no real address is in the public repo. When `CI=true` (always in GitHub Actions), `sf` replaces it with the `SITE_SENDER_EMAIL` secret. See `"replacements"` in `sfdx-project.json`. Scratch-org deploys from your machine keep the placeholder, which is fine there.
 
 ### Manual step after the first ScoreCall deploy to an org
 
@@ -62,6 +67,16 @@ The orgs are authenticated with **SFDX auth URLs** (`force://...`), which contai
 | ------------------ | ------------------------------- | ---------------- |
 | `SF_AUTH_URL_UAT`  | Repository secret               | `scorecall-uat`  |
 | `SF_AUTH_URL_PROD` | `production` environment secret | `scorecall-prod` |
+
+| Secret              | Where             | What                                                        |
+| ------------------- | ----------------- | ----------------------------------------------------------- |
+| `SITE_SENDER_EMAIL` | Repository secret | "From" address of the site's emails, the same for both orgs |
+
+```powershell
+gh secret set SITE_SENDER_EMAIL
+```
+
+`gh` prompts for the value, so it isn't saved in your shell history. The first time an org deploys a new sender address, Salesforce emails that address a verification link; click it, or the site's emails keep coming from the default address.
 
 ### Setting or rotating a secret
 

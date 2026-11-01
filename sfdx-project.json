@@ -8,5 +8,18 @@
   "name": "ScoreCall",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "67.0"
+  "sourceApiVersion": "67.0",
+  "replacements": [
+    {
+      "filename": "force-app/main/default/networks/ScoreCall.network-meta.xml",
+      "stringToReplace": "noreply@example.com",
+      "replaceWithEnv": "SITE_SENDER_EMAIL",
+      "replaceWhenEnv": [
+        {
+          "env": "CI",
+          "value": "true"
+        }
+      ]
+    }
+  ]
 }
