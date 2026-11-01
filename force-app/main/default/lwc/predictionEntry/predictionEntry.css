@@ -1,0 +1,87 @@
+.spinner-holder {
+  min-height: 4rem;
+}
+
+.deadline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.fixture {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.fixture:last-child {
+  border-bottom: none;
+}
+
+/* Home | score | away: the score column stays centred on any screen width. */
+.match {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.team.home {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.team-name {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crest {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.goals {
+  width: 3.5rem;
+}
+
+.result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+/* Phones: smaller names and crests so a row still fits on one line. */
+@media (max-width: 480px) {
+  .team-name {
+    font-size: 0.8rem;
+  }
+
+  .crest {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .goals {
+    width: 3rem;
+  }
+}
