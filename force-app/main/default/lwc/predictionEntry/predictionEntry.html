@@ -1,0 +1,175 @@
+<template>
+  <lightning-card title={title} icon-name="custom:custom11">
+    <div slot="actions">
+      <lightning-button-group>
+        <lightning-button-icon
+          icon-name="utility:chevronleft"
+          alternative-text="Previous gameweek"
+          title="Previous gameweek"
+          disabled={noPrevious}
+          onclick={handlePrevious}
+          class="previous"
+        ></lightning-button-icon>
+        <lightning-button-icon
+          icon-name="utility:chevronright"
+          alternative-text="Next gameweek"
+          title="Next gameweek"
+          disabled={noNext}
+          onclick={handleNext}
+          class="next"
+        ></lightning-button-icon>
+      </lightning-button-group>
+    </div>
+
+    <div class="slds-p-horizontal_medium">
+      <template lwc:if={isLoading}>
+        <div class="slds-is-relative spinner-holder">
+          <lightning-spinner
+            alternative-text="Loading"
+            size="small"
+          ></lightning-spinner>
+        </div>
+      </template>
+
+      <template lwc:elseif={error}>
+        <p class="error slds-text-color_error">{error}</p>
+      </template>
+
+      <template lwc:elseif={gameweek}>
+        <div class="deadline slds-m-bottom_small">
+          <template lwc:if={isLocked}>
+            <lightning-icon
+              icon-name="utility:lock"
+              size="x-small"
+              class="slds-m-right_x-small"
+            ></lightning-icon>
+            <span class="locked-text"
+              >Locked: predictions can't be changed any more.</span
+            >
+          </template>
+          <template lwc:else>
+            <span class="slds-text-title_bold">Deadline </span>
+            <lightning-formatted-date-time
+              value={gameweek.deadline}
+              weekday="short"
+              day="numeric"
+              month="short"
+              hour="2-digit"
+              minute="2-digit"
+            ></lightning-formatted-date-time>
+            <span class="countdown slds-badge slds-m-left_x-small"
+              >{countdown} left</span
+            >
+          </template>
+        </div>
+
+        <template lwc:if={hasFixtures}>
+          <template for:each={rows} for:item="row">
+            <div key={row.fixtureId} class="fixture">
+              <div class="kickoff slds-text-body_small slds-text-color_weak">
+                <lightning-formatted-date-time
+                  value={row.kickoff}
+                  weekday="short"
+                  day="numeric"
+                  month="short"
+                  hour="2-digit"
+                  minute="2-digit"
+                ></lightning-formatted-date-time>
+                <template lwc:if={row.statusLabel}>
+                  <span class="status slds-badge slds-m-left_x-small"
+                    >{row.statusLabel}</span
+                  >
+                </template>
+              </div>
+
+              <div class="match">
+                <div class="team home">
+                  <span class="team-name">{row.homeTeam}</span>
+                  <img
+                    lwc:if={row.homeCrest}
+                    src={row.homeCrest}
+                    alt=""
+                    class="crest"
+                  />
+                </div>
+                <div class="score">
+                  <lightning-input
+                    type="number"
+                    variant="label-hidden"
+                    label={row.homeLabel}
+                    value={row.home}
+                    min="0"
+                    max={maxGoals}
+                    step="1"
+                    disabled={row.disabled}
+                    data-fixture-id={row.fixtureId}
+                    data-side="home"
+                    onchange={handleScoreChange}
+                    class="goals"
+                  ></lightning-input>
+                  <span class="dash">–</span>
+                  <lightning-input
+                    type="number"
+                    variant="label-hidden"
+                    label={row.awayLabel}
+                    value={row.away}
+                    min="0"
+                    max={maxGoals}
+                    step="1"
+                    disabled={row.disabled}
+                    data-fixture-id={row.fixtureId}
+                    data-side="away"
+                    onchange={handleScoreChange}
+                    class="goals"
+                  ></lightning-input>
+                </div>
+                <div class="team away">
+                  <img
+                    lwc:if={row.awayCrest}
+                    src={row.awayCrest}
+                    alt=""
+                    class="crest"
+                  />
+                  <span class="team-name">{row.awayTeam}</span>
+                </div>
+              </div>
+
+              <template lwc:if={row.hasResult}>
+                <div class="result slds-text-body_small">
+                  <span>Result {row.homeGoals}–{row.awayGoals}</span>
+                  <template lwc:if={row.pointsLabel}>
+                    <span class={row.pointsClass}>{row.pointsLabel}</span>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </template>
+        </template>
+        <template lwc:else>
+          <p class="empty slds-text-color_weak">No matches in this gameweek.</p>
+        </template>
+      </template>
+
+      <template lwc:else>
+        <p class="empty slds-text-color_weak">No gameweeks yet.</p>
+      </template>
+    </div>
+
+    <div slot="footer">
+      <template lwc:if={showSave}>
+        <template lwc:if={hasUnsavedChanges}>
+          <span class="unsaved slds-text-color_weak slds-m-right_small"
+            >Unsaved changes</span
+          >
+        </template>
+        <lightning-button
+          variant="brand"
+          label="Save predictions"
+          disabled={saveDisabled}
+          onclick={handleSave}
+          class="save"
+        ></lightning-button>
+      </template>
+    </div>
+  </lightning-card>
+</template>
