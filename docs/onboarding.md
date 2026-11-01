@@ -24,7 +24,7 @@ Every deploy is followed by a **publish** in CI; changes made in Experience Buil
 
 ### Before the first deploy
 
-1. **Enable Digital Experiences:** Setup → Digital Experiences → Settings → **Enable Digital Experiences**, choose a domain name, Save. It **can't be turned off** again. Without it, deploying the site metadata fails.
+1. **Enable Digital Experiences:** Setup → Digital Experiences → Settings → **Enable Digital Experiences**, Save. With enhanced domains (all new orgs) there is no domain to choose: the site lives at `<My Domain>.my.site.com`. It **can't be turned off** again. Without it, deploying the site metadata fails.
 2. **Sender address secret** (once, for both orgs): `gh secret set SITE_SENDER_EMAIL` with the address the site's emails come from. See [ci.md](ci.md#org-specific-values-in-the-site-metadata).
 
 ### After the first deploy
