@@ -1,11 +1,12 @@
 # 001: Licence for friends on the site
 
 - **Status:** Accepted by the PO on 2026-11-01 (spike #2, decided together with #10)
+- **Amended:** 2026-11-02 (#28): sign-up with an invite code instead of invite only
 - **Date:** 2026-11-01
 
 ## Decision
 
-Friends log in to the Experience Cloud site with the **Customer Community** licence (member-based). Sign-up is **invite only**: the PO adds each friend; there is no self-registration page.
+Friends log in to the Experience Cloud site with the **Customer Community** licence (member-based). Friends **sign up themselves with an invite code** that the PO shares (amended 2026-11-02, see below). Originally it was invite only: the PO added each friend.
 
 ## Licences available
 
@@ -34,3 +35,14 @@ The spike's original assumption (only External Apps Login and Customer Portal Ma
 - Tested by `ScoreCallSiteAccessTest`: two Customer Community users load the gameweek, save their own predictions, and can't see each other's.
 
 How to add a friend: [onboarding.md](../onboarding.md).
+
+## Amendment 2026-11-02: sign-up with an invite code (#28)
+
+Onboarding the first test friend in UAT showed that "invite only" depends on email: the friend could only log in after clicking the "set your password" link, and that email never reached Gmail. The PO decided friends sign up themselves:
+
+- The site's Register page asks for name, email, **their own password** and an **invite code**. No email is needed to get in.
+- The code lives in the **ScoreCall Settings** custom setting, per org, never in git. Empty = sign-up closed. The PO can change it at any time.
+- The seat limit still applies: sign-up is refused with a clear message when the 5 Customer Community seats are used.
+- `add-friend.apex` stays as a fallback.
+
+Details: [onboarding.md](../onboarding.md#how-a-friend-signs-up).

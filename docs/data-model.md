@@ -148,6 +148,21 @@ Lives in source and is deployed like code; it doesn't use data storage. One reco
 
 See [game-rules.md → Changing the points](game-rules.md#changing-the-points).
 
+### ScoreCall_Settings\_\_c (hierarchy custom setting)
+
+Values that differ per org and must not be in git. Only the org default is used. It's data, so a deploy creates the fields but not the values: set the first two in Setup → Custom Settings → ScoreCall Settings → Manage, and run `scripts/apex/setup-site.apex` for the two Ids. The Ids are stored because the site's guest user (sign-up) can't query accounts or profiles.
+
+| Field                   | Example      | Notes                                                                     |
+| ----------------------- | ------------ | ------------------------------------------------------------------------- |
+| Invite_Code\_\_c        | (secret)     | Code friends enter to sign up; not case-sensitive. Empty = sign-up closed |
+| Username_Suffix\_\_c    | `.scorecall` | Username = email + suffix (`.scorecall-uat` in UAT)                       |
+| Players_Account_Id\_\_c |              | The ScoreCall Players account; set by `setup-site.apex`                   |
+| Friend_Profile_Id\_\_c  |              | The ScoreCall Friend profile; set by `setup-site.apex`                    |
+
+### Friend_Signup\_\_e (platform event)
+
+Published by the site's sign-up after a friend's user is created (field `User_Id__c`). `FriendSignupTrigger` runs as the Automated Process user and assigns `ScoreCall_Player`, which the guest user can't do. Events aren't stored as records, so they use no data storage.
+
 ## Leaderboards
 
 Leaderboards aren't stored. They're calculated on demand: the sum of each league member's `Prediction__c.Points__c` and `Table_Prediction__c.Points__c` for the season (aggregate SOQL). The data volume is tiny (about 4 players × 380 matches), and there are no stored totals to keep in sync.
@@ -174,10 +189,11 @@ Leaderboards aren't stored. They're calculated on demand: the sum of each league
 
 ## Access
 
-| Permission set       | Who              | Access                                                                           |
-| -------------------- | ---------------- | -------------------------------------------------------------------------------- |
-| ScoreCall_Admin      | Product owner    | Full access to all objects                                                       |
-| ScoreCall_Player     | Every player     | Read reference data and leagues; create/edit own Prediction and Table Prediction |
-| ScoreCall_Player_App | Internal players | The ScoreCall app and its tabs (no data access; combine with ScoreCall_Player)   |
+| Permission set       | Who                   | Access                                                                           |
+| -------------------- | --------------------- | -------------------------------------------------------------------------------- |
+| ScoreCall_Admin      | Product owner         | Full access to all objects                                                       |
+| ScoreCall_Player     | Every player          | Read reference data and leagues; create/edit own Prediction and Table Prediction |
+| ScoreCall_Player_App | Internal players      | The ScoreCall app and its tabs (no data access; combine with ScoreCall_Player)   |
+| ScoreCall_Guest      | The site's guest user | Only the sign-up Apex (`SelfRegistrationController`)                             |
 
 ScoreCall_Player has no app or tab settings, because the Customer Community licence of site users doesn't allow assigned apps. Friends on the site get the **ScoreCall Friend** profile, which only carries that licence; all their access comes from ScoreCall_Player. See [onboarding.md](onboarding.md).

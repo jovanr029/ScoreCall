@@ -1,0 +1,19 @@
+.container {
+  max-width: 26rem;
+  margin: 0 auto;
+}
+
+.names {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+lightning-input {
+  margin-bottom: 0.5rem;
+}
+
+.working {
+  min-height: 8rem;
+  padding-top: 5rem;
+}

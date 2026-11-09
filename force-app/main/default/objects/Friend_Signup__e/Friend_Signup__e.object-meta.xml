@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Published by the site's sign-up (running as the guest user) after a friend's user is created. FriendSignupTrigger, running as the Automated Process user, then assigns ScoreCall_Player: the guest user can't touch permission sets.</description>
+    <eventType>HighVolume</eventType>
+    <label>Friend Signup</label>
+    <pluralLabel>Friend Signups</pluralLabel>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
+</CustomObject>
