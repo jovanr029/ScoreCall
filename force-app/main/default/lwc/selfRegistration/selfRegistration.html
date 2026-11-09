@@ -1,0 +1,100 @@
+<template>
+  <div class="container">
+    <template lwc:if={isForm}>
+      <form onsubmit={handleSubmit} novalidate>
+        <h1 class="slds-text-heading_medium slds-m-bottom_small">
+          Join ScoreCall
+        </h1>
+        <p class="slds-text-color_weak slds-m-bottom_medium">
+          You need the invite code from the organiser.
+        </p>
+
+        <template lwc:if={error}>
+          <div
+            class="error slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium"
+            role="alert"
+          >
+            {error}
+          </div>
+        </template>
+
+        <div class="names">
+          <lightning-input
+            label="First name"
+            value={firstName}
+            data-field="firstName"
+            onchange={handleChange}
+            autocomplete="given-name"
+            required
+          ></lightning-input>
+          <lightning-input
+            label="Last name"
+            value={lastName}
+            data-field="lastName"
+            onchange={handleChange}
+            autocomplete="family-name"
+            required
+          ></lightning-input>
+        </div>
+        <lightning-input
+          type="email"
+          label="Email"
+          value={email}
+          data-field="email"
+          onchange={handleChange}
+          autocomplete="email"
+          required
+        ></lightning-input>
+        <lightning-input
+          type="password"
+          label="Password"
+          value={password}
+          data-field="password"
+          onchange={handleChange}
+          autocomplete="new-password"
+          required
+        ></lightning-input>
+        <lightning-input
+          type="password"
+          label="Confirm password"
+          value={confirmPassword}
+          data-field="confirmPassword"
+          onchange={handleChange}
+          onblur={handleConfirmBlur}
+          autocomplete="new-password"
+          required
+        ></lightning-input>
+        <lightning-input
+          label="Invite code"
+          value={inviteCode}
+          data-field="inviteCode"
+          onchange={handleChange}
+          autocomplete="off"
+          required
+        ></lightning-input>
+
+        <lightning-button
+          type="submit"
+          variant="brand"
+          label="Sign up"
+          class="submit slds-m-top_medium"
+          stretch
+        ></lightning-button>
+
+        <p class="slds-m-top_medium slds-text-align_center">
+          Already have an account? <a href={loginUrl}>Log in</a>
+        </p>
+      </form>
+    </template>
+
+    <template lwc:if={isWorking}>
+      <div class="working slds-is-relative">
+        <lightning-spinner
+          alternative-text={workingMessage}
+          size="medium"
+        ></lightning-spinner>
+        <p class="working-message slds-text-align_center">{workingMessage}</p>
+      </div>
+    </template>
+  </div>
+</template>

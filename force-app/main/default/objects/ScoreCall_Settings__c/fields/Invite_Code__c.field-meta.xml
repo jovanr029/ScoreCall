@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Invite_Code__c</fullName>
+    <description>Code a friend must enter to sign up on the site. Not case-sensitive. Empty = sign-up is closed.</description>
+    <inlineHelpText>Share this with friends. Leave empty to close sign-up.</inlineHelpText>
+    <label>Invite Code</label>
+    <length>40</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
