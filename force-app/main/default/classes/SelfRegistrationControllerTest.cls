@@ -27,6 +27,19 @@ private class SelfRegistrationControllerTest {
     .Id;
     insert owner;
 
+    // The guest gets exactly what a real org gives it (docs/onboarding.md),
+    // so the tests don't depend on whether that step was done in this org.
+    Id guestId = guest().Id;
+    if (
+      [
+        SELECT COUNT()
+        FROM PermissionSetAssignment
+        WHERE AssigneeId = :guestId AND PermissionSet.Name = 'ScoreCall_Guest'
+      ] == 0
+    ) {
+      TestDataFactory.assignPermissionSet(guestId, 'ScoreCall_Guest');
+    }
+
     // Each System.runAs block is a separate context, so setup objects (User)
     // and data (Account, Contact, custom setting) don't mix (MIXED_DML).
     Account players = new Account(Name = 'ScoreCall Players');
