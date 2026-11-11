@@ -195,4 +195,37 @@ private class PredictionStatusServiceTest {
       );
     }
   }
+
+  // ---------- system mode (#31) ----------
+
+  @IsTest
+  static void voidsOtherPlayersPredictionsWhoeverRunsIt() {
+    User alice = TestDataFactory.createPlayer('alice');
+    User bob = TestDataFactory.createPlayer('bob');
+    Prediction__c alicePrediction;
+    Fixture__c postponed;
+    System.runAs(admin()) {
+      alicePrediction = TestDataFactory.buildPrediction(theFixture(), 2, 1);
+      alicePrediction.OwnerId = alice.Id;
+      insert alicePrediction;
+      // In memory only: the service reconciles whatever fixtures it's given.
+      postponed = theFixture();
+      postponed.Status__c = 'Postponed';
+    }
+
+    System.runAs(bob) {
+      Assert.areEqual(
+        0,
+        [SELECT COUNT() FROM Prediction__c WITH USER_MODE],
+        'bob can\'t see alice\'s prediction'
+      );
+      Test.startTest();
+      PredictionStatusService.reconcile(new List<Fixture__c>{ postponed });
+      Test.stopTest();
+    }
+
+    Prediction__c result = reload(alicePrediction);
+    Assert.areEqual('Voided', result.Status__c);
+    Assert.areEqual(0, result.Points__c);
+  }
 }

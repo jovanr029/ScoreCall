@@ -40,6 +40,20 @@ public class TestDataFactory {
     );
   }
 
+  /**
+   * An internal player: Minimum Access - Salesforce + ScoreCall_Player. Sees
+   * only their own predictions (Prediction__c is private), so tests that run
+   * as one prove that code meant to reach every player's records doesn't
+   * depend on the running user's access. Setup objects: call it before any
+   * other DML in the test (MIXED_DML_OPERATION).
+   */
+  public static User createPlayer(String alias) {
+    User player = buildUser(alias, 'Minimum Access - Salesforce');
+    insert player;
+    assignPermissionSet(player.Id, 'ScoreCall_Player');
+    return player;
+  }
+
   public static void assignPermissionSet(Id userId, String permissionSetName) {
     insert new PermissionSetAssignment(
       AssigneeId = userId,

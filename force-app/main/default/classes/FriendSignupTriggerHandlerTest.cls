@@ -51,4 +51,30 @@ private class FriendSignupTriggerHandlerTest {
 
     Assert.areEqual(1, assignments(carol.Id), 'No duplicate assignment');
   }
+
+  /**
+   * In production the Automated Process user runs this. Running it as a
+   * minimum-access user, who can't manage permission sets, proves it doesn't
+   * depend on the running user's access (#31): it still sees carol's existing
+   * assignment (no duplicate) and assigns dave.
+   */
+  @IsTest
+  static void worksForAUserWhoCannotManagePermissionSets() {
+    User carol = newPlayer('carol');
+    User dave = newPlayer('dave');
+    User nobody = newPlayer('nobody');
+    TestDataFactory.assignPermissionSet(
+      carol.Id,
+      FriendSignupTriggerHandler.PERMISSION_SET
+    );
+
+    System.runAs(nobody) {
+      Test.startTest();
+      FriendSignupTriggerHandler.assignPlayer(new Set<Id>{ carol.Id, dave.Id });
+      Test.stopTest();
+    }
+
+    Assert.areEqual(1, assignments(carol.Id), 'No duplicate assignment');
+    Assert.areEqual(1, assignments(dave.Id));
+  }
 }
