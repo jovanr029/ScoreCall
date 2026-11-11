@@ -320,4 +320,40 @@ private class ScoringServiceTest {
       Assert.areEqual(6, reload(exact).Points__c);
     }
   }
+
+  // ---------- system mode (#31) ----------
+
+  @IsTest
+  static void scoresOtherPlayersPredictionsWhoeverRunsIt() {
+    User alice = TestDataFactory.createPlayer('alice');
+    User bob = TestDataFactory.createPlayer('bob');
+    Prediction__c alicePrediction;
+    Fixture__c finished;
+    System.runAs(admin()) {
+      alicePrediction = TestDataFactory.buildPrediction(theFixture(), 2, 1);
+      alicePrediction.OwnerId = alice.Id;
+      insert alicePrediction;
+      // In memory only: the service scores whatever fixtures it's given.
+      finished = theFixture();
+      finished.Status__c = 'Finished';
+      finished.Home_Goals__c = 2;
+      finished.Away_Goals__c = 1;
+    }
+
+    System.runAs(bob) {
+      Assert.areEqual(
+        0,
+        [SELECT COUNT() FROM Prediction__c WITH USER_MODE],
+        'bob can\'t see alice\'s prediction'
+      );
+      Test.startTest();
+      ScoringService.score(new List<Fixture__c>{ finished });
+      Test.stopTest();
+    }
+
+    Prediction__c result = reload(alicePrediction);
+    Assert.areEqual('Scored', result.Status__c);
+    Assert.areEqual(8, result.Points__c);
+    Assert.isTrue(result.Exact_Score__c);
+  }
 }

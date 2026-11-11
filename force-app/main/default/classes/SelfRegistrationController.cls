@@ -19,7 +19,8 @@
  *
  * without sharing: the guest user has no access to the records involved;
  * every input is validated here. Nothing is returned except the new user's Id
- * and the login URL.
+ * and the login URL. There is no SOQL or DML here (only the custom setting,
+ * Site methods and EventBus.publish), so nothing needs WITH SYSTEM_MODE (#31).
  */
 public without sharing class SelfRegistrationController {
   @TestVisible

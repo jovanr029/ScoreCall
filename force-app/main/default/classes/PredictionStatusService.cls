@@ -10,9 +10,11 @@
  *
  * Scored predictions are never touched.
  *
- * without sharing: predictions are private to each player, and voiding must
+ * System mode: predictions are private to each player, and voiding must
  * reach every player's prediction, whoever changed the fixture. It only ever
- * changes Status__c and Points__c.
+ * changes Status__c and Points__c. "without sharing" alone isn't enough: since
+ * API 67 static SOQL still applies the running user's sharing, so the query
+ * says WITH SYSTEM_MODE and the update AccessLevel.SYSTEM_MODE (#31).
  */
 public without sharing class PredictionStatusService {
   public static final String OPEN = 'Open';
@@ -28,6 +30,7 @@ public without sharing class PredictionStatusService {
       WHERE
         Fixture__c IN :fixturesById.keySet()
         AND Status__c IN (:OPEN, :VOIDED)
+      WITH SYSTEM_MODE // every player's predictions, not just the running user's
     ]) {
       Fixture__c fixture = fixturesById.get(prediction.Fixture__c);
       Boolean shouldBeVoid =
@@ -52,6 +55,7 @@ public without sharing class PredictionStatusService {
         );
       }
     }
-    update changed;
+    // System mode: other players' predictions, and fields players can't edit.
+    Database.update(changed, AccessLevel.SYSTEM_MODE);
   }
 }

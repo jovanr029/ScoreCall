@@ -6,8 +6,11 @@
  * event triggers run as the Automated Process user, in their own transaction
  * (so no MIXED_DML with the contact the sign-up created).
  *
- * without sharing: assigns permission sets to users the running user doesn't
- * own; only ever ScoreCall_Player, only to the users in the events.
+ * System mode: assigns permission sets to users the running user doesn't
+ * own; only ever ScoreCall_Player, only to the users in the events. The
+ * queries and the insert say so explicitly (WITH SYSTEM_MODE,
+ * AccessLevel.SYSTEM_MODE): "without sharing" alone doesn't lift the running
+ * user's access since API 67 (#31).
  */
 public without sharing class FriendSignupTriggerHandler extends TriggerHandler {
   public static final String PERMISSION_SET = 'ScoreCall_Player';
@@ -26,12 +29,14 @@ public without sharing class FriendSignupTriggerHandler extends TriggerHandler {
       SELECT Id
       FROM PermissionSet
       WHERE Name = :PERMISSION_SET
+      WITH SYSTEM_MODE
     ]
     .Id;
     for (PermissionSetAssignment existing : [
       SELECT AssigneeId
       FROM PermissionSetAssignment
       WHERE AssigneeId IN :userIds AND PermissionSetId = :permissionSetId
+      WITH SYSTEM_MODE // other users' assignments
     ]) {
       userIds.remove(existing.AssigneeId);
     }
@@ -45,6 +50,7 @@ public without sharing class FriendSignupTriggerHandler extends TriggerHandler {
         )
       );
     }
-    insert assignments;
+    // System mode: assigning a permission set to other users.
+    Database.insert(assignments, AccessLevel.SYSTEM_MODE);
   }
 }

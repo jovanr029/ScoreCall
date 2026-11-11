@@ -10,9 +10,12 @@
  * ones never are. A corrected result re-scores them, and an annulled result
  * (Finished -> not finished) puts them back to Open.
  *
- * without sharing: predictions are private to each player, and scoring must
+ * System mode: predictions are private to each player, and scoring must
  * reach every player's prediction, whoever updated the fixture. It only ever
- * changes Status__c, Points__c and Exact_Score__c.
+ * changes Status__c, Points__c and Exact_Score__c. "without sharing" alone
+ * isn't enough: since API 67 static SOQL still applies the running user's
+ * sharing, so the query says WITH SYSTEM_MODE and the update
+ * AccessLevel.SYSTEM_MODE (#31).
  */
 public without sharing class ScoringService {
   public static final String SCORED = 'Scored';
@@ -112,6 +115,7 @@ public without sharing class ScoringService {
       WHERE
         Fixture__c IN :fixturesById.keySet()
         AND Status__c IN (:PredictionStatusService.OPEN, :SCORED)
+      WITH SYSTEM_MODE // every player's predictions, not just the running user's
     ]) {
       Fixture__c fixture = fixturesById.get(prediction.Fixture__c);
       if (prediction.Gameweek__c != fixture.Gameweek__c) {
@@ -125,7 +129,8 @@ public without sharing class ScoringService {
         changed.add(change);
       }
     }
-    update changed;
+    // System mode: other players' predictions, and fields players can't edit.
+    Database.update(changed, AccessLevel.SYSTEM_MODE);
   }
 
   /** The scored version of the prediction, or null if nothing changes. */
