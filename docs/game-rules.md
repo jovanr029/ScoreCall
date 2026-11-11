@@ -73,7 +73,18 @@ Maximum: 20 teams × 20 = 400 points. A typical season of match predictions is w
 
 ## Leaderboard tie-breaker
 
-_To be confirmed by PO._ Proposal: more exact scores first, then alphabetical.
+Confirmed by the PO on 2026-11-11 (#9):
+
+1. More **points** ranks higher.
+2. Equal points: more **exact scores** ranks higher.
+3. Still equal: **shared place**. Two players in 2nd place are both 2nd, and the next player is 4th (1, 2, 2, 4).
+
+## Leaderboard (version 1)
+
+- One table for **all players** of the active season, on the **Leaderboard** tab (ScoreCall app) and the Leaderboard tab of the friends' site Home page. Per-league tables come later, when there is more than one group of friends.
+- **Whole season** = match points + table prediction points. A **gameweek** view (any gameweek whose deadline has passed) shows only that gameweek's match points.
+- A player appears once they have made at least one prediction in the season.
+- Columns: rank, player, points, exact scores. Your own row is highlighted. Only totals are shown, never someone else's predictions (that is #11).
 
 ## Not in version 1
 

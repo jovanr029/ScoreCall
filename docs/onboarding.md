@@ -4,18 +4,18 @@ Friends play on an Experience Cloud site: an **LWR** site called **ScoreCall** a
 
 ## What's in source
 
-| Metadata                              | What                                                                                                  |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `digitalExperiences/site/ScoreCall1`  | The site's pages, theme and routes. Home page = `predictionEntry`, Register page = `selfRegistration` |
-| `digitalExperienceConfigs/ScoreCall1` | Site URL path `/scorecall`                                                                            |
-| `networks/ScoreCall`                  | Site settings: members, emails, status Live, self-registration on                                     |
-| `sites/ScoreCall`                     | The underlying site record (the CLI created it with the site)                                         |
-| `profiles/ScoreCall Friend`           | Custom profile with the Customer Community licence, no permissions                                    |
-| `roles/ScoreCall_Admin`               | Role for the owner of the friends' account                                                            |
-| `permissionsets/ScoreCall_Player`     | All of a player's access (also site membership)                                                       |
-| `permissionsets/ScoreCall_Guest`      | The guest user (not logged in): only the sign-up Apex and its event                                   |
-| `objects/Friend_Signup__e`            | Platform event: "a friend signed up", assigns ScoreCall_Player                                        |
-| `objects/ScoreCall_Settings__c`       | Custom setting: invite code, username suffix, account and profile Ids, set per org                    |
+| Metadata                              | What                                                                                                                               |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `digitalExperiences/site/ScoreCall1`  | The site's pages, theme and routes. Home page = `scorecallHome` (tabs Predict and Leaderboard), Register page = `selfRegistration` |
+| `digitalExperienceConfigs/ScoreCall1` | Site URL path `/scorecall`                                                                                                         |
+| `networks/ScoreCall`                  | Site settings: members, emails, status Live, self-registration on                                                                  |
+| `sites/ScoreCall`                     | The underlying site record (the CLI created it with the site)                                                                      |
+| `profiles/ScoreCall Friend`           | Custom profile with the Customer Community licence, no permissions                                                                 |
+| `roles/ScoreCall_Admin`               | Role for the owner of the friends' account                                                                                         |
+| `permissionsets/ScoreCall_Player`     | All of a player's access (also site membership)                                                                                    |
+| `permissionsets/ScoreCall_Guest`      | The guest user (not logged in): only the sign-up Apex and its event                                                                |
+| `objects/Friend_Signup__e`            | Platform event: "a friend signed up", assigns ScoreCall_Player                                                                     |
+| `objects/ScoreCall_Settings__c`       | Custom setting: invite code, username suffix, account and profile Ids, set per org                                                 |
 
 `ScoreCall1` is the name Salesforce gave the site's content when it was created; the site itself is called ScoreCall.
 
