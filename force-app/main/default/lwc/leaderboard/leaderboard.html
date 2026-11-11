@@ -1,0 +1,63 @@
+<template>
+  <lightning-card title="Leaderboard" icon-name="custom:custom48">
+    <div slot="actions">
+      <lightning-combobox
+        label="Show"
+        variant="label-hidden"
+        value={selected}
+        options={options}
+        onchange={handleChange}
+        class="picker"
+      ></lightning-combobox>
+    </div>
+
+    <div class="slds-p-horizontal_medium">
+      <template lwc:if={isLoading}>
+        <div class="slds-is-relative spinner-holder">
+          <lightning-spinner
+            alternative-text="Loading"
+            size="small"
+          ></lightning-spinner>
+        </div>
+      </template>
+
+      <template lwc:elseif={error}>
+        <p class="error slds-text-color_error">{error}</p>
+      </template>
+
+      <template lwc:elseif={hasRows}>
+        <p class="subtitle slds-text-title slds-m-bottom_x-small">{subtitle}</p>
+        <table class="standings slds-table slds-table_cell-buffer">
+          <thead>
+            <tr>
+              <th scope="col" class="rank">#</th>
+              <th scope="col">Player</th>
+              <th scope="col" class="number">Points</th>
+              <th scope="col" class="number" title="Exact scores">Exact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={rows} for:item="row">
+              <tr key={row.userId} class={row.rowClass}>
+                <td class="rank">{row.rank}</td>
+                <td class="name">{row.name}</td>
+                <td class="number points">{row.points}</td>
+                <td class="number exact">{row.exactScores}</td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+        <p class="hint slds-text-body_small slds-text-color_weak">
+          Equal points: more exact scores ranks higher. Still equal: shared
+          place.
+        </p>
+      </template>
+
+      <template lwc:else>
+        <p class="empty slds-text-color_weak">
+          No points yet. The table fills up as matches are played.
+        </p>
+      </template>
+    </div>
+  </lightning-card>
+</template>
