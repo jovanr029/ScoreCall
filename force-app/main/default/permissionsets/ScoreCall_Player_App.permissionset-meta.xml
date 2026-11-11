@@ -24,6 +24,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>ScoreCall_Leaderboard</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>ScoreCall_Predict</tab>
         <visibility>Visible</visibility>
     </tabSettings>

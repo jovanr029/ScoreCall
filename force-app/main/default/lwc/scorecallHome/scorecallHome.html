@@ -1,0 +1,12 @@
+<template>
+  <!-- The site has no navigation menu yet (#30), so its Home page shows both
+       screens as tabs. A tab's content is only created when it is opened. -->
+  <lightning-tabset variant="default">
+    <lightning-tab label="Predict" value="predict">
+      <c-prediction-entry></c-prediction-entry>
+    </lightning-tab>
+    <lightning-tab label="Leaderboard" value="leaderboard">
+      <c-leaderboard></c-leaderboard>
+    </lightning-tab>
+  </lightning-tabset>
+</template>

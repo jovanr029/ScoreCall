@@ -165,7 +165,7 @@ Published by the site's sign-up after a friend's user is created (field `User_Id
 
 ## Leaderboards
 
-Leaderboards aren't stored. They're calculated on demand: the sum of each league member's `Prediction__c.Points__c` and `Table_Prediction__c.Points__c` for the season (aggregate SOQL). The data volume is tiny (about 4 players × 380 matches), and there are no stored totals to keep in sync.
+Leaderboards aren't stored. They're calculated on demand by `LeaderboardController`: the sum of each player's `Prediction__c.Points__c` and `Table_Prediction__c.Points__c` for the season (aggregate SOQL). Version 1 has one table for all players; per league later (filter by `League_Member__c`). The queries use `WITH SYSTEM_MODE`: predictions are private, and since API 67 even a `without sharing` class only sees the running user's own records without it. The data volume is tiny (about 4 players × 380 matches), and there are no stored totals to keep in sync.
 
 ## Design decisions
 
