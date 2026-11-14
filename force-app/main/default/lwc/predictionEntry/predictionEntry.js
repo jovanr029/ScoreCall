@@ -114,6 +114,9 @@ export default class PredictionEntry extends LightningElement {
         ...fixture,
         home: draft ? draft.home : fixture.predictedHome,
         away: draft ? draft.away : fixture.predictedAway,
+        // Phones show the three-letter code; fall back to the full name.
+        homeShortName: fixture.homeShort || fixture.homeTeam,
+        awayShortName: fixture.awayShort || fixture.awayTeam,
         homeLabel: `${fixture.homeTeam} goals`,
         awayLabel: `${fixture.awayTeam} goals`,
         disabled: this.isLocked || isPostponed,

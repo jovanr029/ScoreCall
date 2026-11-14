@@ -142,6 +142,10 @@ public without sharing class SelfRegistrationController {
     String suffix = settings.Username_Suffix__c == null
       ? ''
       : settings.Username_Suffix__c.trim();
+    // "uat" would give "friend@gmail.comuat"; the dot keeps it readable.
+    if (suffix != '' && !suffix.startsWith('.')) {
+      suffix = '.' + suffix;
+    }
     return email.trim().toLowerCase() + suffix;
   }
 

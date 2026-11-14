@@ -84,7 +84,8 @@
 
               <div class="match">
                 <div class="team home">
-                  <span class="team-name">{row.homeTeam}</span>
+                  <span class="team-name full">{row.homeTeam}</span>
+                  <span class="team-name short">{row.homeShortName}</span>
                   <img
                     lwc:if={row.homeCrest}
                     src={row.homeCrest}
@@ -130,7 +131,8 @@
                     alt=""
                     class="crest"
                   />
-                  <span class="team-name">{row.awayTeam}</span>
+                  <span class="team-name full">{row.awayTeam}</span>
+                  <span class="team-name short">{row.awayShortName}</span>
                 </div>
               </div>
 
