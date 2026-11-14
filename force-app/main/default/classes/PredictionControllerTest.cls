@@ -103,6 +103,8 @@ private class PredictionControllerTest {
       Assert.isNotNull(view.deadline);
       Assert.areEqual(2, view.fixtures.size());
       Assert.areEqual('Team 1', view.fixtures[0].homeTeam);
+      Assert.areEqual('T1', view.fixtures[0].homeShort, 'Code for phones');
+      Assert.areEqual('T2', view.fixtures[0].awayShort);
       Assert.areEqual('Team 2', view.fixtures[0].awayTeam);
       Assert.isNull(view.fixtures[0].predictedHome, 'Nothing predicted yet');
       Assert.areEqual(gameweekId(7), view.previousGameweekId);

@@ -1,0 +1,29 @@
+/* One centred column; the cards were full screen width on large monitors. */
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.25rem;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #37003c;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-name {
+  color: #5c5c5c;
+}

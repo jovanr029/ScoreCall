@@ -57,6 +57,8 @@ function gameweek(overrides = {}) {
         fixtureId: "a02F1",
         homeTeam: "Arsenal",
         awayTeam: "Chelsea",
+        homeShort: "ARS",
+        awayShort: "CHE",
         kickoff: IN_TWO_DAYS,
         status: "Scheduled",
         predictedHome: 2,
@@ -75,9 +77,16 @@ function gameweek(overrides = {}) {
   };
 }
 
-/** Lets pending promises and re-renders settle. */
-function flush() {
-  return Promise.resolve().then(() => Promise.resolve());
+/**
+ * Lets pending promises and re-renders settle. Saving chains several awaits
+ * (Apex, toast, refreshApex), so wait enough microtask ticks for all of them;
+ * two were sometimes too few and made the save tests flaky.
+ */
+async function flush(times = 10) {
+  for (let i = 0; i < times; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    await Promise.resolve();
+  }
 }
 
 function mount() {
@@ -122,10 +131,23 @@ describe("c-prediction-entry", () => {
     getGameweek.emit(gameweek());
     await flush();
 
-    const names = [...element.shadowRoot.querySelectorAll(".team-name")].map(
-      (n) => n.textContent
-    );
-    expect(names).toEqual(["Arsenal", "Chelsea", "Liverpool", "Man City"]);
+    const names = (selector) =>
+      [...element.shadowRoot.querySelectorAll(selector)].map(
+        (n) => n.textContent
+      );
+    expect(names(".team-name.full")).toEqual([
+      "Arsenal",
+      "Chelsea",
+      "Liverpool",
+      "Man City"
+    ]);
+    // Phones show the three-letter code (CSS); no code: the full name
+    expect(names(".team-name.short")).toEqual([
+      "ARS",
+      "CHE",
+      "Liverpool",
+      "Man City"
+    ]);
     const fields = inputs(element);
     expect(fields).toHaveLength(4);
     expect(fields[0].value).toBe(2);

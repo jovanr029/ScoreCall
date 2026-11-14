@@ -1,15 +1,29 @@
 <template>
-  <!-- The site has no navigation menu yet (#30), so its Home page shows both
-       screens as tabs. A tab's content is only created when it is opened. -->
-  <lightning-tabset variant="default">
-    <lightning-tab label="Predict" value="predict">
-      <c-prediction-entry></c-prediction-entry>
-    </lightning-tab>
-    <lightning-tab label="Leaderboard" value="leaderboard">
-      <c-leaderboard></c-leaderboard>
-    </lightning-tab>
-    <lightning-tab label="All predictions" value="all-predictions">
-      <c-gameweek-predictions></c-gameweek-predictions>
-    </lightning-tab>
-  </lightning-tabset>
+  <div class="page">
+    <!-- The header lives here, not in the site theme: the login and sign-up
+         pages use the same theme and must not show "Log out". -->
+    <header class="header">
+      <span class="brand">ScoreCall</span>
+      <span class="user">
+        <template lwc:if={userName}>
+          <span class="user-name">{userName}</span>
+        </template>
+        <a href={logoutUrl} class="logout">Log out</a>
+      </span>
+    </header>
+
+    <!-- The site has no navigation menu, so the Home page shows the screens
+         as tabs. A tab's content is only created when it is opened. -->
+    <lightning-tabset variant="default">
+      <lightning-tab label="Predict" value="predict">
+        <c-prediction-entry></c-prediction-entry>
+      </lightning-tab>
+      <lightning-tab label="Leaderboard" value="leaderboard">
+        <c-leaderboard></c-leaderboard>
+      </lightning-tab>
+      <lightning-tab label="All predictions" value="all-predictions">
+        <c-gameweek-predictions></c-gameweek-predictions>
+      </lightning-tab>
+    </lightning-tabset>
+  </div>
 </template>

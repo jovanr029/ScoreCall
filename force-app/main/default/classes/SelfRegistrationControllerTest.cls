@@ -259,6 +259,14 @@ private class SelfRegistrationControllerTest {
         new ScoreCall_Settings__c()
       )
     );
+    Assert.areEqual(
+      'carol@example.com.uat',
+      SelfRegistrationController.username(
+        'carol@example.com',
+        new ScoreCall_Settings__c(Username_Suffix__c = 'uat')
+      ),
+      'A suffix without the dot gets one'
+    );
   }
 
   @IsTest

@@ -39,6 +39,10 @@
   text-align: right;
 }
 
+.team-name.short {
+  display: none;
+}
+
 .team-name {
   font-weight: 600;
   overflow: hidden;
@@ -74,6 +78,15 @@
 @media (max-width: 480px) {
   .team-name {
     font-size: 0.8rem;
+  }
+
+  /* Three-letter codes so a row fits on one line ("TOT" not "Tottenham H…") */
+  .team-name.full {
+    display: none;
+  }
+
+  .team-name.short {
+    display: inline;
   }
 
   .crest {

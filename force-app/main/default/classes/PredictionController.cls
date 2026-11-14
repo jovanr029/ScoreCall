@@ -40,6 +40,11 @@ public with sharing class PredictionController {
     public String homeTeam;
     @AuraEnabled
     public String awayTeam;
+    /** Three-letter code (Team__c.Short_Name__c), shown on phones. */
+    @AuraEnabled
+    public String homeShort;
+    @AuraEnabled
+    public String awayShort;
     @AuraEnabled
     public String homeCrest;
     @AuraEnabled
@@ -283,8 +288,10 @@ public with sharing class PredictionController {
         Home_Goals__c,
         Away_Goals__c,
         Home_Team__r.Name,
+        Home_Team__r.Short_Name__c,
         Home_Team__r.Crest_URL__c,
         Away_Team__r.Name,
+        Away_Team__r.Short_Name__c,
         Away_Team__r.Crest_URL__c
       FROM Fixture__c
       WHERE Gameweek__c = :gameweek.Id
@@ -295,6 +302,8 @@ public with sharing class PredictionController {
       row.fixtureId = fixture.Id;
       row.homeTeam = fixture.Home_Team__r.Name;
       row.awayTeam = fixture.Away_Team__r.Name;
+      row.homeShort = fixture.Home_Team__r.Short_Name__c;
+      row.awayShort = fixture.Away_Team__r.Short_Name__c;
       row.homeCrest = fixture.Home_Team__r.Crest_URL__c;
       row.awayCrest = fixture.Away_Team__r.Crest_URL__c;
       row.kickoff = fixture.Kickoff__c;
