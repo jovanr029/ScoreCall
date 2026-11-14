@@ -1,0 +1,69 @@
+.spinner-holder {
+  min-height: 4rem;
+}
+
+.totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.total {
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  background-color: #f3f3f3;
+}
+
+.match {
+  padding: 0.6rem 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+.match-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.result,
+.versus {
+  margin: 0 0.4rem;
+}
+
+.result {
+  font-weight: 700;
+}
+
+/* Keep name, score and points close together on wide screens */
+.predictions {
+  margin-top: 0.3rem;
+  max-width: 24rem;
+}
+
+/* name | predicted score | points */
+.prediction {
+  display: grid;
+  grid-template-columns: 1fr 3.5rem 3rem;
+  padding: 0.1rem 0;
+}
+
+.score {
+  text-align: center;
+}
+
+.points {
+  text-align: right;
+}
+
+.exact {
+  color: #2e844a;
+  font-weight: 700;
+}
+
+/* The current user, in the totals and in every match */
+.me {
+  background-color: #eef4ff;
+  font-weight: 700;
+}

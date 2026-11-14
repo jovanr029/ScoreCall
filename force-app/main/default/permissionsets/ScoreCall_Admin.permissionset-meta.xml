@@ -5,6 +5,10 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>GameweekPredictionsController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LeaderboardController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -287,6 +291,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Prediction__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>ScoreCall_All_Predictions</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

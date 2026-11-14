@@ -1,0 +1,100 @@
+<template>
+  <lightning-card title="All predictions" icon-name="custom:custom15">
+    <div slot="actions">
+      <lightning-button-group>
+        <lightning-button-icon
+          icon-name="utility:chevronleft"
+          alternative-text="Previous gameweek"
+          title="Previous gameweek"
+          disabled={noPrevious}
+          onclick={handlePrevious}
+          class="previous"
+        ></lightning-button-icon>
+        <lightning-button-icon
+          icon-name="utility:chevronright"
+          alternative-text="Next gameweek"
+          title="Next gameweek"
+          disabled={noNext}
+          onclick={handleNext}
+          class="next"
+        ></lightning-button-icon>
+      </lightning-button-group>
+    </div>
+
+    <div class="slds-p-horizontal_medium">
+      <template lwc:if={isLoading}>
+        <div class="slds-is-relative spinner-holder">
+          <lightning-spinner
+            alternative-text="Loading"
+            size="small"
+          ></lightning-spinner>
+        </div>
+      </template>
+
+      <template lwc:elseif={error}>
+        <p class="error slds-text-color_error">{error}</p>
+      </template>
+
+      <template lwc:elseif={hasGameweek}>
+        <p class="gameweek slds-text-title_bold slds-m-bottom_x-small">
+          {view.name}
+        </p>
+
+        <template lwc:if={hasPlayers}>
+          <div class="totals slds-m-bottom_small">
+            <template for:each={players} for:item="player">
+              <span key={player.userId} class={player.chipClass}>
+                {player.name} <strong>{player.points}</strong>
+              </span>
+            </template>
+          </div>
+        </template>
+        <template lwc:else>
+          <p class="no-players slds-text-color_weak slds-m-bottom_small">
+            Nobody predicted this gameweek.
+          </p>
+        </template>
+
+        <template for:each={matches} for:item="match">
+          <div key={match.fixtureId} class="match">
+            <div class="match-header">
+              <span class="teams">
+                {match.homeTeam}
+                <template lwc:if={match.hasResult}>
+                  <span class="result"
+                    >{match.homeGoals}–{match.awayGoals}</span
+                  >
+                </template>
+                <template lwc:else>
+                  <span class="versus">v</span>
+                </template>
+                {match.awayTeam}
+              </span>
+              <template lwc:if={match.statusLabel}>
+                <span class="status slds-badge">{match.statusLabel}</span>
+              </template>
+            </div>
+            <ul class="predictions">
+              <template for:each={match.predictions} for:item="prediction">
+                <li key={prediction.userId} class={prediction.rowClass}>
+                  <span class="name">{prediction.name}</span>
+                  <span class="score">{prediction.score}</span>
+                  <span class={prediction.pointsClass}
+                    >{prediction.pointsLabel}</span
+                  >
+                </li>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </template>
+
+      <template lwc:else>
+        <p class="empty slds-text-color_weak">
+          Everyone's predictions appear here once a gameweek's deadline has
+          passed.
+        </p>
+      </template>
+    </div>
+  </lightning-card>
+</template>

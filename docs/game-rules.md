@@ -12,7 +12,7 @@ ScoreCall is a Premier League prediction game for a group of friends. These rule
 - Each gameweek, every player predicts the score of **every match** in it.
 - You predict **once**. The same prediction counts in every league you're in.
 - Predictions can be created and edited until the **gameweek deadline**: **1 hour before the gameweek's first kickoff**. After the deadline, the whole gameweek is locked.
-- Before the deadline you see only your own predictions. After it, you can see everyone's.
+- Before the deadline you see only your own predictions. After it, you can see everyone's, with their points once matches are played (**All predictions** tab, #11). This is enforced on the server: asking for another player's predictions before the deadline is refused, whatever the browser sends.
 
 ### Points per match
 
