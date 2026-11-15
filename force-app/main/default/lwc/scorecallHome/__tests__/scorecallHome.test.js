@@ -25,18 +25,20 @@ describe("c-scorecall-home", () => {
     }
   });
 
-  it("offers Predict, Leaderboard and All predictions as tabs, Predict first", () => {
+  it("offers Predict, Leaderboard, All predictions and Season table as tabs", () => {
     const element = mount();
 
     const tabs = [...element.shadowRoot.querySelectorAll("lightning-tab")];
     expect(tabs.map((tab) => tab.label)).toEqual([
       "Predict",
       "Leaderboard",
-      "All predictions"
+      "All predictions",
+      "Season table"
     ]);
     expect(tabs[0].querySelector("c-prediction-entry")).not.toBeNull();
     expect(tabs[1].querySelector("c-leaderboard")).not.toBeNull();
     expect(tabs[2].querySelector("c-gameweek-predictions")).not.toBeNull();
+    expect(tabs[3].querySelector("c-table-prediction")).not.toBeNull();
   });
 
   it("logs out of the site and comes back to its login page", () => {

@@ -1,0 +1,63 @@
+.spinner-holder {
+  min-height: 4rem;
+}
+
+.table {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* position | crest | team | "now 3" | up | down (or points) */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.position {
+  width: 1.5rem;
+  text-align: right;
+  font-weight: 700;
+}
+
+.crest {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.team {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team.short {
+  display: none;
+}
+
+.now {
+  font-size: 0.75rem;
+  width: 3.5rem;
+  text-align: right;
+}
+
+.points {
+  width: 2.5rem;
+  text-align: right;
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .team.full {
+    display: none;
+  }
+
+  .team.short {
+    display: inline;
+  }
+}

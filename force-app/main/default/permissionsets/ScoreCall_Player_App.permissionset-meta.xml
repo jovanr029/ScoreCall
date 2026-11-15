@@ -36,6 +36,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>ScoreCall_Season_Table</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Table_Prediction__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>

@@ -10,4 +10,20 @@
         <field>Exact_Score_Bonus__c</field>
         <value xsi:type="xsd:double">5</value>
     </values>
+    <values>
+        <field>Table_Exact_Points__c</field>
+        <value xsi:type="xsd:double">20</value>
+    </values>
+    <values>
+        <field>Table_One_Off_Points__c</field>
+        <value xsi:type="xsd:double">15</value>
+    </values>
+    <values>
+        <field>Table_Two_Off_Points__c</field>
+        <value xsi:type="xsd:double">10</value>
+    </values>
+    <values>
+        <field>Table_Three_Off_Points__c</field>
+        <value xsi:type="xsd:double">5</value>
+    </values>
 </CustomMetadata>

@@ -26,14 +26,6 @@ jest.mock(
   { virtual: true }
 );
 
-// lightning/toast: a default export with a static show(); __esModule makes
-// the default import resolve to this object.
-jest.mock(
-  "lightning/toast",
-  () => ({ __esModule: true, default: { show: jest.fn() } }),
-  { virtual: true }
-);
-
 jest.mock(
   "@salesforce/apex",
   () => ({ refreshApex: jest.fn(() => Promise.resolve()) }),
@@ -78,15 +70,14 @@ function gameweek(overrides = {}) {
 }
 
 /**
- * Lets pending promises and re-renders settle. Saving chains several awaits
- * (Apex, toast, refreshApex), so wait enough microtask ticks for all of them;
- * two were sometimes too few and made the save tests flaky.
+ * Lets every pending promise and re-render settle. A macrotask (setTimeout 0)
+ * runs only after all queued microtasks, however long the save chain is;
+ * counting microtask ticks made the save tests flaky when Jest ran files in
+ * parallel.
  */
-async function flush(times = 10) {
-  for (let i = 0; i < times; i++) {
-    // eslint-disable-next-line no-await-in-loop
-    await Promise.resolve();
-  }
+function flush() {
+  // eslint-disable-next-line @lwc/lwc/no-async-operation
+  return new Promise((resolve) => setTimeout(resolve, 0));
 }
 
 function mount() {
@@ -112,11 +103,19 @@ function changeScore(input, value) {
 }
 
 describe("c-prediction-entry", () => {
+  // Spy on the lightning/toast stub the component itself imports. A
+  // jest.mock() of the module was flaky: with files running in parallel the
+  // component sometimes got the stub and the test checked the mock.
+  beforeEach(() => {
+    jest.spyOn(Toast, "show").mockImplementation(() => {});
+  });
+
   afterEach(() => {
     while (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it("shows a spinner until the gameweek arrives", () => {

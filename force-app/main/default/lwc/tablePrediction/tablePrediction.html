@@ -1,0 +1,130 @@
+<template>
+  <lightning-card title="Season table" icon-name="custom:custom62">
+    <div class="slds-p-horizontal_medium">
+      <template lwc:if={isLoading}>
+        <div class="slds-is-relative spinner-holder">
+          <lightning-spinner
+            alternative-text="Loading"
+            size="small"
+          ></lightning-spinner>
+        </div>
+      </template>
+
+      <template lwc:elseif={error}>
+        <p class="error slds-text-color_error">{error}</p>
+      </template>
+
+      <template lwc:elseif={notOpenYet}>
+        <p class="not-open slds-text-color_weak">
+          Table predictions for {view.seasonName} open soon.
+        </p>
+      </template>
+
+      <!-- Before the deadline: put the teams in order -->
+      <template lwc:elseif={isOpen}>
+        <p class="intro slds-m-bottom_small">
+          <!-- &nbsp;: the template compiler drops the plain space before a tag -->
+          Predict the final {view.seasonName} table.
+          Deadline&nbsp;<lightning-formatted-date-time
+            value={view.deadline}
+            weekday="short"
+            day="numeric"
+            month="short"
+            hour="2-digit"
+            minute="2-digit"
+            class="deadline"
+          ></lightning-formatted-date-time
+          >.
+          <template lwc:if={view.hasSaved}>
+            <span class="saved slds-badge slds-m-left_x-small">Saved</span>
+          </template>
+        </p>
+        <ol class="table">
+          <template for:each={editRows} for:item="row">
+            <li key={row.teamId} class="row">
+              <span class="position">{row.position}</span>
+              <img lwc:if={row.crest} src={row.crest} alt="" class="crest" />
+              <span class="team full">{row.teamName}</span>
+              <span class="team short">{row.shortLabel}</span>
+              <span class="now slds-text-color_weak">{row.nowLabel}</span>
+              <lightning-button-icon
+                icon-name="utility:up"
+                alternative-text="Move up"
+                title="Move up"
+                size="small"
+                disabled={row.upDisabled}
+                data-index={row.index}
+                onclick={handleUp}
+                class="up"
+              ></lightning-button-icon>
+              <lightning-button-icon
+                icon-name="utility:down"
+                alternative-text="Move down"
+                title="Move down"
+                size="small"
+                disabled={row.downDisabled}
+                data-index={row.index}
+                onclick={handleDown}
+                class="down"
+              ></lightning-button-icon>
+            </li>
+          </template>
+        </ol>
+      </template>
+
+      <!-- After the deadline: read-only, everyone's tables -->
+      <template lwc:elseif={isClosed}>
+        <template lwc:if={hasPlayers}>
+          <lightning-combobox
+            label="Whose table"
+            value={selectedPlayer}
+            options={playerOptions}
+            onchange={handlePlayerChange}
+            class="player-picker slds-m-bottom_small"
+          ></lightning-combobox>
+        </template>
+        <template lwc:else>
+          <p class="no-tables slds-text-color_weak slds-m-bottom_small">
+            Nobody saved a table before the deadline.
+          </p>
+        </template>
+        <p class="total slds-text-title_bold slds-m-bottom_x-small">
+          {pointsLabel}: {shownTotal}
+        </p>
+        <ol class="table">
+          <template for:each={shownTable} for:item="row">
+            <li key={row.teamId} class="row">
+              <span class="position">{row.predictedPosition}</span>
+              <img lwc:if={row.crest} src={row.crest} alt="" class="crest" />
+              <span class="team full">{row.teamName}</span>
+              <span class="team short">{row.shortLabel}</span>
+              <span class="now slds-text-color_weak">{row.nowLabel}</span>
+              <span class="points">{row.pointsText}</span>
+            </li>
+          </template>
+        </ol>
+      </template>
+
+      <template lwc:else>
+        <p class="empty slds-text-color_weak">No season to predict yet.</p>
+      </template>
+    </div>
+
+    <div slot="footer">
+      <template lwc:if={isOpen}>
+        <template lwc:if={dirty}>
+          <span class="unsaved slds-text-color_weak slds-m-right_small"
+            >Unsaved changes</span
+          >
+        </template>
+        <lightning-button
+          variant="brand"
+          label="Save table"
+          disabled={saveDisabled}
+          onclick={handleSave}
+          class="save"
+        ></lightning-button>
+      </template>
+    </div>
+  </lightning-card>
+</template>

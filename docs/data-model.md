@@ -141,10 +141,14 @@ Leagues continue across seasons; standings are per season.
 
 Lives in source and is deployed like code; it doesn't use data storage. One record, `Default`.
 
-| Field                  | Value | Notes                                          |
-| ---------------------- | ----- | ---------------------------------------------- |
-| Outcome_Points\_\_c    | 3     | Correct outcome                                |
-| Exact_Score_Bonus\_\_c | 5     | Added to the outcome points for an exact score |
+| Field                       | Value | Notes                                                |
+| --------------------------- | ----- | ---------------------------------------------------- |
+| Outcome_Points\_\_c         | 3     | Correct outcome                                      |
+| Exact_Score_Bonus\_\_c      | 5     | Added to the outcome points for an exact score       |
+| Table_Exact_Points\_\_c     | 20    | Table prediction: team in exactly its final position |
+| Table_One_Off_Points\_\_c   | 15    | 1 place off                                          |
+| Table_Two_Off_Points\_\_c   | 10    | 2 places off                                         |
+| Table_Three_Off_Points\_\_c | 5     | 3 places off (4 or more: 0)                          |
 
 See [game-rules.md → Changing the points](game-rules.md#changing-the-points).
 

@@ -16,6 +16,10 @@
         <apexClass>PredictionController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>TablePredictionController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>Scoring_Rule__mdt</name>
@@ -303,6 +307,10 @@
     </tabSettings>
     <tabSettings>
         <tab>ScoreCall_Predict</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>ScoreCall_Season_Table</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

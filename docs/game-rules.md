@@ -29,7 +29,7 @@ Points are given automatically as soon as the sync sees the match as finished (w
 
 ### Changing the points
 
-The 3 and 5 are configuration, not code: the custom metadata record **Scoring Rule → Default** (`force-app/main/default/customMetadata/Scoring_Rule.Default.md-meta.xml`).
+The match points (3 and 5) and the table prediction points (20 / 15 / 10 / 5) are configuration, not code: the custom metadata record **Scoring Rule → Default** (`force-app/main/default/customMetadata/Scoring_Rule.Default.md-meta.xml`).
 
 1. Change the values in that file on a branch and open a PR. **Never edit them directly in Setup**: the next deploy would overwrite the change, and git would no longer show the real rules.
 2. After the PR is merged and deployed, recalculate the season in each org, so the whole season uses one set of rules (PO decision):
@@ -48,9 +48,11 @@ The 3 and 5 are configuration, not code: the custom metadata record **Scoring Ru
 ## Season table prediction
 
 - Before the season, each player predicts the **final league position of all 20 teams** (each position used exactly once).
-- **Deadline:** 1 hour before the season's first kickoff.
-  - **Exception for 2026/27:** the season was already running when ScoreCall launched, so the deadline for this season is set at launch. It's less fair, but it's the same for everyone.
-- Points are awarded once the final table is known.
+- **Deadline:** 1 hour before the season's first kickoff (`Season__c.Table_Prediction_Deadline__c`).
+  - **Exception for 2026/27:** the season was already running when ScoreCall launched, so the deadline for this season is set at launch: **Fri 27 November 2026, 20:00 CET** (19:00 UTC), the same moment as the GW 12 deadline (PO decision, #18). It's less fair, but it's the same for everyone.
+- **How (Season table tab, #18):** your table starts as the current league table; move teams with ▲ ▼ and save. You can change it as often as you like until the deadline, which is enforced on the server.
+- **After the deadline** everyone's tables are visible, with points "if the season ended today" (current positions). These are only an indication: they are not stored and don't count in the leaderboard yet.
+- **Points are awarded once the season is Finished**, from the final table, and then count in the season leaderboard. If the final table is corrected afterwards, the points follow.
 
 ### Points per team
 
