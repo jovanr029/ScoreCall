@@ -63,6 +63,37 @@ public without sharing class ScoringService {
     return 0;
   }
 
+  /**
+   * Table prediction points for one team (#18): exact position, 1, 2 or 3
+   * places off (20 / 15 / 10 / 5 at the time of writing), 4 or more off: 0.
+   */
+  public static Integer tablePoints(
+    Integer predictedPosition,
+    Integer actualPosition
+  ) {
+    if (predictedPosition == null || actualPosition == null) {
+      return 0;
+    }
+    Scoring_Rule__mdt rules = rules();
+    switch on Math.abs(predictedPosition - actualPosition) {
+      when 0 {
+        return rules.Table_Exact_Points__c.intValue();
+      }
+      when 1 {
+        return rules.Table_One_Off_Points__c.intValue();
+      }
+      when 2 {
+        return rules.Table_Two_Off_Points__c.intValue();
+      }
+      when 3 {
+        return rules.Table_Three_Off_Points__c.intValue();
+      }
+      when else {
+        return 0;
+      }
+    }
+  }
+
   private static Boolean isExact(
     Integer predictedHome,
     Integer predictedAway,

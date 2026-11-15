@@ -15,6 +15,7 @@
     <tabs>ScoreCall_Predict</tabs>
     <tabs>ScoreCall_Leaderboard</tabs>
     <tabs>ScoreCall_All_Predictions</tabs>
+    <tabs>ScoreCall_Season_Table</tabs>
     <tabs>Prediction__c</tabs>
     <tabs>Table_Prediction__c</tabs>
     <tabs>League__c</tabs>
